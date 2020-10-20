@@ -5,7 +5,7 @@ const db = require("../model/helper");
 /* Collections */
 
 // GET list of collections
-router.get("/", function (req, res, next) {
+router.get("/collections", function (req, res, next) {
   db("SELECT * FROM collections;")
     .then((results) => {
       res.send(results.data);
@@ -14,7 +14,7 @@ router.get("/", function (req, res, next) {
 });
 
 // INSERT a new collection
-router.post("/", function (req, res, next) {
+router.post("/collections", function (req, res, next) {
   db(`INSERT INTO collections (name) VALUES ("${req.body.name}");`)
     .then(() => {
       res.send("New collection added");

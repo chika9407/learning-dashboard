@@ -1,5 +1,12 @@
 require("dotenv").config();
+
 const mysql = require("mysql");
+
+var file = process.argv[2];
+console.log("file is: ", file);
+
+const fs = require("fs");
+const migrationSQL = fs.readFileSync(__dirname + "/" + file).toString();
 
 const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
@@ -18,14 +25,9 @@ con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
 
-  // TODO: change sql
-  let sql =
-    "DROP TABLE if exists students; CREATE TABLE students(id INT NOT NULL AUTO_INCREMENT, firstname VARCHAR(40) not null, lastname VARCHAR(40) not null, PRIMARY KEY (id));";
-  con.query(sql, function (err, result) {
+  con.query(migrationSQL, function (err, result) {
     if (err) throw err;
-    console.log("Table creation `students` was successful!");
-
-    console.log("Closing...");
+    console.log("Migration was completed");
   });
 
   con.end();
