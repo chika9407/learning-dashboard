@@ -57,7 +57,7 @@ class App extends React.Component {
         <div className="app container text-center p-4">
           <Switch>
             <Route path="/addcourse">
-              <AddCourse />
+              <AddCourse collections={collections} />
             </Route>
             <Route path="/">
               <div>
