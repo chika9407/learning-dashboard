@@ -21,7 +21,7 @@ export default class AddCourse extends Component {
 
     const parsedUrl = url.split("/");
 
-    // Get last part of url that contains the course title
+    // Get last part of url that contains the course title (before last if url ends with /)
     const titleFromUrl =
       parsedUrl[parsedUrl.length - 1] === "/"
         ? parsedUrl[parsedUrl.length - 2]

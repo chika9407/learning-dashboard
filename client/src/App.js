@@ -2,8 +2,9 @@ import React from "react";
 import "./App.css";
 import AddCourse from "./components/AddCourse";
 import CourseCard from "./components/CourseCard";
+import CoursePage from "./components/CoursePage";
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class App extends React.Component {
   render() {
     const { courses, collections } = this.state;
     return (
-      <Router>
+      <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
@@ -59,6 +60,9 @@ class App extends React.Component {
             <Route path="/addcourse">
               <AddCourse collections={collections} />
             </Route>
+            <Route path="/courses/1">
+              <CoursePage />
+            </Route>
             <Route path="/">
               <div>
                 <h2>Your courses:</h2>
@@ -77,7 +81,7 @@ class App extends React.Component {
             </Route>
           </Switch>
         </div>
-      </Router>
+      </div>
     );
   }
 }
