@@ -46,11 +46,13 @@ router.post("/courses", function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
-// PUT to update course
+// UPDATE a course
 router.put("/courses/:id", function (req, res, next) {
-  db(`UPDATE courses SET complete = 1 WHERE id = ${req.params.id};`)
+  db(
+    `UPDATE courses SET complete = ${req.body.complete} WHERE id = ${req.params.id};`
+  )
     .then(() => {
-      res.send("Course completed");
+      res.send("Course updated");
     })
     .catch((err) => res.status(500).send(err));
 });
@@ -77,11 +79,22 @@ router.post("/courses/:id", function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
-// PUT to update task
+// UPDATE a task
 router.put("/tasks/:id", function (req, res, next) {
-  db(`UPDATE tasks SET complete = 1 WHERE id = ${req.params.id};`)
+  db(
+    `UPDATE tasks SET complete = ${req.body.complete} WHERE id = ${req.params.id};`
+  )
     .then(() => {
       res.send("Task completed");
+    })
+    .catch((err) => res.status(500).send(err));
+});
+
+// DELETE a task
+router.delete("/tasks/:id", function (req, res, next) {
+  db(`DELETE FROM tasks WHERE id = ${req.params.id};`)
+    .then(() => {
+      res.send("Task deleted");
     })
     .catch((err) => res.status(500).send(err));
 });
