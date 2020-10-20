@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
+import AddCourseForm from "./components/AddCourseForm";
 import CourseCard from "./components/CourseCard";
+import NavBar from "./components/NavBar";
 
 class App extends React.Component {
   constructor(props) {
@@ -31,14 +33,25 @@ class App extends React.Component {
   }
 
   render() {
-    const { courses } = this.state;
+    const { courses, collections } = this.state;
     return (
-      <div className="container text-center p-4">
-        <h2>Your courses:</h2>
-        <div className="d-flex flex-wrap justify-content-center">
-          {courses.map((course, i) => (
-            <CourseCard course={course} key={i} />
-          ))}
+      <div className="app">
+        <NavBar />
+        <div className="container text-center p-4">
+          <h2>Your courses:</h2>
+          <div className="d-flex flex-wrap justify-content-center">
+            {courses.map((course, i) => (
+              <CourseCard
+                collection={collections.find(
+                  (e) => e.id === course.collection_id
+                )}
+                course={course}
+                key={i}
+              />
+            ))}
+          </div>
+          <h2>Add a new course</h2>
+          {/* <AddCourseForm /> */}
         </div>
       </div>
     );
