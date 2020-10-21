@@ -33,6 +33,15 @@ router.get("/courses", function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
+// GET one course
+router.get("/courses/:id", function (req, res, next) {
+  db(`SELECT * FROM courses WHERE id = ${req.params.id};`)
+    .then((results) => {
+      res.send(results.data[0]);
+    })
+    .catch((err) => res.status(500).send(err));
+});
+
 // INSERT a new course
 router.post("/courses", function (req, res, next) {
   const { title, url, collection } = req.body;
@@ -60,7 +69,7 @@ router.put("/courses/:id", function (req, res, next) {
 /* Tasks */
 
 // GET list of tasks for one course
-router.get("/courses/:id", function (req, res, next) {
+router.get("/courses/:id/tasks", function (req, res, next) {
   db(`SELECT * FROM tasks WHERE course_id = ${req.params.id};`)
     .then((results) => {
       res.send(results.data);
@@ -69,7 +78,7 @@ router.get("/courses/:id", function (req, res, next) {
 });
 
 // INSERT a new task
-router.post("/courses/:id", function (req, res, next) {
+router.post("/courses/:id/tasks", function (req, res, next) {
   db(
     `INSERT INTO tasks (name, course_id) VALUES ("${req.body.name}", ${req.params.id});`
   )
@@ -85,7 +94,7 @@ router.put("/tasks/:id", function (req, res, next) {
     `UPDATE tasks SET complete = ${req.body.complete} WHERE id = ${req.params.id};`
   )
     .then(() => {
-      res.send("Task completed");
+      res.send("Task updated");
     })
     .catch((err) => res.status(500).send(err));
 });
