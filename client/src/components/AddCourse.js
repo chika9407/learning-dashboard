@@ -6,6 +6,7 @@ export default class AddCourse extends Component {
     this.state = {
       title: "",
       url: "",
+      platform: "",
       collection: undefined,
       collections: [],
     };
@@ -22,15 +23,18 @@ export default class AddCourse extends Component {
     // Handle input from select
     const { name, value } = e.target;
 
-    // If a url is given, handle parsing to prefill title
+    // If a url is given, handle parsing to prefill title and platform
     if (name === "url" && value) {
       const parsedUrl = value.split("/");
 
+      console.log(parsedUrl);
+
       // Get last part of url that contains the course title (before last if url ends with /)
-      const titleFromUrl =
-        parsedUrl[parsedUrl.length - 1] === "/"
-          ? parsedUrl[parsedUrl.length - 2]
-          : parsedUrl[parsedUrl.length - 1];
+      const titleFromUrl = parsedUrl[parsedUrl.length - 1]
+        ? parsedUrl[parsedUrl.length - 1]
+        : parsedUrl[parsedUrl.length - 2];
+
+      console.log(titleFromUrl);
 
       // Format title
       const title = titleFromUrl
@@ -38,7 +42,16 @@ export default class AddCourse extends Component {
         .map((word) => word[0].toUpperCase() + word.slice(1))
         .join(" ");
 
-      this.setState({ url: value, title });
+      // Get part that contains name of platform
+      const platformFromUrl = parsedUrl
+        .find((e) => e.slice(0, 3) === "www")
+        .split(".")[1];
+
+      // Format platform name
+      const platform =
+        platformFromUrl[0].toUpperCase() + platformFromUrl.slice(1);
+
+      this.setState({ url: value, title, platform });
 
       // If url is removed, remove the title
     } else if (name === "url" && !value) {
@@ -81,14 +94,21 @@ export default class AddCourse extends Component {
             onChange={this.handleInput}
             placeholder="Course url"
           />
-          <div className="form-row">
+          <input
+            className="form-control"
+            name="title"
+            value={this.state.title}
+            onChange={this.handleInput}
+            placeholder="Course title"
+          />
+          <div className="form-row mt-2">
             <div className="col-7">
               <input
                 className="form-control"
-                name="title"
-                value={this.state.title}
+                name="platform"
+                value={this.state.platform}
                 onChange={this.handleInput}
-                placeholder="Course title"
+                placeholder="Platform"
               />
             </div>
             <div className="col">

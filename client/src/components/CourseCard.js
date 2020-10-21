@@ -33,23 +33,29 @@ export default class CourseCard extends Component {
     const { progress } = this.state;
 
     return (
-      <div className="card m-4">
-        <div className="card-body text-left">
+      <div className="card m-4 position-relative">
+        <div className="card-body pt-3 text-left">
+          <small className="card-subtitle text-muted mb-3">
+            {collection?.name}
+          </small>
           <Link to={`/courses/${course.id}`}>
             <h5 className="card-title">{course?.title}</h5>
           </Link>
-          <h6 className="card-subtitle text-muted mb-3">{collection?.name}</h6>
-          <div className="text-right mb-2">
-            <a href={course?.url} target="_blank" className="card-link">
-              Go to course<i className="fas fa-external-link-alt ml-2"></i>
-            </a>
-          </div>
+          <h6 className="card-subtitle text-capitalize text-muted">
+            {course.platform}
+          </h6>
 
-          <div className="progress p-0 m-0" style={{ height: "5px" }}>
-            <div
-              className="progress-bar"
-              style={{ width: `${progress}%` }}
-            ></div>
+          <div className="footer text-right position-absolute ">
+            <a href={course?.url} target="_blank" className="card-link">
+              Go to course<i className="fas fa-external-link-alt mx-2 mb-2"></i>
+            </a>
+
+            <div className="progress" style={{ height: "10px" }}>
+              <div
+                className="progress-bar"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
           </div>
         </div>
       </div>

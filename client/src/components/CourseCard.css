@@ -1,3 +1,15 @@
 .card {
   width: 18rem;
+  height: 10rem;
+}
+
+.course-link {
+  right: 5px;
+}
+
+.footer {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 }

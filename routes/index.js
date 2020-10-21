@@ -44,10 +44,10 @@ router.get("/courses/:id", function (req, res, next) {
 
 // INSERT a new course
 router.post("/courses", function (req, res, next) {
-  const { title, url, collection } = req.body;
+  const { title, url, platform, collection } = req.body;
 
   db(
-    `INSERT INTO courses (title, url, collection_id) VALUES ("${title}", "${url}", ${collection});`
+    `INSERT INTO courses (title, url, platform, collection_id) VALUES ("${title}", "${url}", "${platform}", ${collection});`
   )
     .then(() => {
       res.send("New course added");
@@ -68,10 +68,14 @@ router.put("/courses/:id", function (req, res, next) {
 
 // DELETE a course
 router.delete("/courses/:id", function (req, res, next) {
-  db(`DELETE FROM courses WHERE id = ${req.params.id};`)
-    .then(() => {
-      res.send("Course deleted");
-    })
+  // first delete all tasks related to this course
+  db(`DELETE FROM tasks WHERE course_id = ${req.params.id};`)
+    .then(() =>
+      // then delete the course
+      db(`DELETE FROM courses WHERE id = ${req.params.id};`)
+        .then(() => res.send("Course deleted"))
+        .catch((err) => res.status(500).send(err))
+    )
     .catch((err) => res.status(500).send(err));
 });
 

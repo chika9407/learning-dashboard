@@ -15,67 +15,13 @@ export default class CoursePage extends Component {
     // get course id from url parameter
     const { id } = this.props.match.params;
 
-    const course = await api.getCourse(id);
-    this.setState({ course });
-
-    this.getTasks();
-  }
-
-  //   getCourse = () => {
-  //     // get course id from url parameter
-  //     const { id } = this.props.match.params;
-
-  //     fetch(`/courses/${id}`)
-  //       .then((res) => res.json())
-  //       .then((course) => this.setState({ course }))
-  //       .catch((error) => console.log(error));
-  //   };
-
-  deleteCourse(id) {
-    fetch(`/courses/${id}`, {
-      method: "DELETE",
-    })
-      .then(() => this.props.history.push("/"))
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  getTasks = () => {
-    // get course id from url parameter
-    const { id } = this.props.match.params;
-
-    fetch(`/courses/${id}/tasks`)
-      .then((res) => res.json())
-      .then((tasks) => this.setState({ tasks, task: "" }))
-      .catch((error) => console.log(error));
-  };
-
-  updateTask(id, complete) {
-    fetch(`/tasks/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ complete: !complete }),
-    })
-      .then(this.getTasks)
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  deleteTask(id) {
-    fetch(`/tasks/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(this.getTasks)
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const course = await api.getCourse(id);
+      const tasks = await api.getTasks(id);
+      this.setState({ course, tasks });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   handleInput = (e) => {
@@ -83,23 +29,53 @@ export default class CoursePage extends Component {
     this.setState({ task });
   };
 
-  addTask(e) {
+  // Delete course
+  async deleteCourse(id) {
+    try {
+      await api.deleteCourse(id);
+    } catch (error) {
+      console.log(error);
+    }
+    // navigate back to home page
+    this.props.history.push("/");
+  }
+
+  async handleCompleteTask(id, complete) {
+    // get course id from url parameter
+    const course_id = this.props.match.params.id;
+
+    try {
+      await api.updateTask(id, complete);
+      const tasks = await api.getTasks(course_id);
+      this.setState({ tasks });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteTask(id) {
+    // get course id from url parameter
+    const course_id = this.props.match.params.id;
+
+    try {
+      await api.deleteTask(id);
+      const tasks = await api.getTasks(course_id);
+      this.setState({ tasks });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async addTask(e) {
     e.preventDefault();
 
     // get course id from url parameter
     const { id } = this.props.match.params;
 
-    fetch(`/courses/${id}/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: this.state.task }),
-    })
-      .then(this.getTasks)
-      .catch((error) => {
-        console.log(error);
-      });
+    await api.addTask(id, this.state.task);
+
+    const tasks = await api.getTasks(id);
+    this.setState({ tasks, task: "" });
   }
 
   render() {
@@ -125,7 +101,9 @@ export default class CoursePage extends Component {
               <span className={task.complete && "done"}>
                 <button
                   className="btn p-0 mx-2"
-                  onClick={() => this.updateTask(task.id, task.complete)}
+                  onClick={() =>
+                    this.handleCompleteTask(task.id, task.complete)
+                  }
                 >
                   {!task.complete ? (
                     <i className="far fa-square"></i>
