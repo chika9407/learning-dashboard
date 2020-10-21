@@ -10,7 +10,7 @@ export default class CourseCard extends Component {
     return (
       <div className="card m-4">
         <div className="card-body text-left">
-          <Link to="/courses/1">
+          <Link to={`/courses/${course.id}`}>
             <h5 className="card-title">{course?.title}</h5>
           </Link>
           <h6 className="card-subtitle text-muted mb-3">{collection?.name}</h6>

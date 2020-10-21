@@ -60,9 +60,9 @@ class App extends React.Component {
             <Route path="/addcourse">
               <AddCourse collections={collections} />
             </Route>
-            <Route path="/courses/1">
-              <CoursePage />
-            </Route>
+
+            <Route path="/courses/:id" component={CoursePage} />
+
             <Route path="/">
               <div>
                 <h2>Your courses:</h2>
