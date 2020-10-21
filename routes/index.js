@@ -66,6 +66,15 @@ router.put("/courses/:id", function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
+// DELETE a course
+router.delete("/courses/:id", function (req, res, next) {
+  db(`DELETE FROM courses WHERE id = ${req.params.id};`)
+    .then(() => {
+      res.send("Course deleted");
+    })
+    .catch((err) => res.status(500).send(err));
+});
+
 /* Tasks */
 
 // GET list of tasks for one course

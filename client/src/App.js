@@ -1,41 +1,13 @@
 import React from "react";
 import "./App.css";
 import AddCourse from "./components/AddCourse";
-import CourseCard from "./components/CourseCard";
 import CoursePage from "./components/CoursePage";
 import NavBar from "./components/NavBar";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
+import HomePage from "./components/HomePage";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collections: [],
-      courses: [],
-    };
-  }
-
-  componentDidMount() {
-    this.getCourses();
-    this.getCollections();
-  }
-
-  getCollections = () => {
-    fetch(`/collections`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ collections: data }))
-      .catch((error) => console.log(error));
-  };
-
-  getCourses = () => {
-    fetch(`/courses`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ courses: data }))
-      .catch((error) => console.log(error));
-  };
-
   render() {
-    const { courses, collections } = this.state;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -58,26 +30,13 @@ class App extends React.Component {
         <div className="app container text-center p-4">
           <Switch>
             <Route path="/addcourse">
-              <AddCourse collections={collections} />
+              <AddCourse />
             </Route>
 
             <Route path="/courses/:id" component={CoursePage} />
 
             <Route path="/">
-              <div>
-                <h2>Your courses:</h2>
-                <div className="d-flex flex-wrap justify-content-center">
-                  {courses.map((course, i) => (
-                    <CourseCard
-                      collection={collections.find(
-                        (e) => e.id === course.collection_id
-                      )}
-                      course={course}
-                      key={i}
-                    />
-                  ))}
-                </div>
-              </div>
+              <HomePage />
             </Route>
           </Switch>
         </div>
