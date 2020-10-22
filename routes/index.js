@@ -58,7 +58,7 @@ router.post("/courses", function (req, res, next) {
 // UPDATE a course
 router.put("/courses/:id", function (req, res, next) {
   db(
-    `UPDATE courses SET status = ${req.body.status} WHERE id = ${req.params.id};`
+    `UPDATE courses SET status = "${req.body.status}" WHERE id = ${req.params.id};`
   )
     .then(() => {
       res.send("Course updated");

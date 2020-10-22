@@ -54,12 +54,12 @@ export default {
 
   // PUT to update course
   async updateCourse(id, status) {
-    const res = await fetch(`/courses/:id`, {
+    const res = await fetch(`/courses/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ status: status }),
     });
     if (res.ok) return;
     else throw new Error("Something went wrong");

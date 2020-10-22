@@ -35,6 +35,20 @@ export default class CourseCard extends Component {
     const { course, category } = this.props;
     const { progress } = this.state;
 
+    let statusClassName = "border px-1 rounded d-inline-block ";
+
+    // determine color of status label
+    switch (course.status) {
+      case "completed":
+        statusClassName += "text-success border-success";
+        break;
+      case "active":
+        statusClassName += "text-warning border-warning";
+        break;
+      default:
+        statusClassName += "text-secondary border-secondary";
+    }
+
     return (
       <div className="card m-4 position-relative">
         <div className="card-body pt-3 text-left">
@@ -44,9 +58,10 @@ export default class CourseCard extends Component {
           <Link to={`/courses/${course.id}`}>
             <h5 className="card-title">{course?.title}</h5>
           </Link>
-          <h6 className="card-subtitle text-capitalize text-muted">
+          <h6 className="card-subtitle text-capitalize text-muted mb-1">
             {course.platform}
           </h6>
+          <small className={statusClassName}>{course?.status}</small>
 
           <div className="footer text-right position-absolute ">
             <a href={course?.url} target="_blank" className="card-link">

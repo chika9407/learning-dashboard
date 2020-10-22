@@ -24,11 +24,28 @@ export default class HomePage extends Component {
 
   render() {
     const { courses, categories } = this.state;
+    const activeCourses = courses?.filter(
+      (course) => course.status === "active"
+    );
+    const otherCourses = courses?.filter(
+      (course) => course.status !== "active"
+    );
+
     return (
-      <div>
-        <h2>Courses you're taking:</h2>
+      <div className="pt-5">
+        <h2>Courses you're taking</h2>
+        <div className="d-flex flex-wrap justify-content-center border-bottom pb-3 mb-5">
+          {activeCourses.map((course, i) => (
+            <CourseCard
+              category={categories?.find((e) => e.id === course.category_id)}
+              course={course}
+              key={i}
+            />
+          ))}
+        </div>
+        <h3>Other courses</h3>
         <div className="d-flex flex-wrap justify-content-center">
-          {courses?.map((course, i) => (
+          {otherCourses.map((course, i) => (
             <CourseCard
               category={categories?.find((e) => e.id === course.category_id)}
               course={course}

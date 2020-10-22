@@ -8,6 +8,7 @@ export default class CoursePage extends Component {
       course: {},
       tasks: [],
       text: "",
+      selectedStatus: "",
     };
   }
 
@@ -18,16 +19,33 @@ export default class CoursePage extends Component {
     try {
       const course = await api.getCourse(id);
       const tasks = await api.getTasks(id);
-      this.setState({ course, tasks });
+      this.setState({ course, tasks, selectedStatus: course.status });
     } catch (error) {
       console.log(error);
     }
   }
 
   handleInput = (e) => {
-    const text = e.target.value;
-    this.setState({ text });
+    this.setState({ text: e.target.value });
   };
+
+  handleOptionChange = (e) => {
+    this.setState({ selectedStatus: e.target.value });
+
+    // Update the status in the database
+    this.updateCourse(this.state.course.id, e.target.value);
+  };
+
+  // Update course status
+  async updateCourse(id, status) {
+    try {
+      await api.updateCourse(id, status);
+      const course = await api.getCourse(id);
+      this.setState({ course });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // Delete course
   async deleteCourse(id) {
@@ -39,11 +57,6 @@ export default class CoursePage extends Component {
     // navigate back to home page
     this.props.history.push("/");
   }
-
-  // Activate course
-  // async updateCourse() {
-
-  // }
 
   async handleCompleteTask(id, complete) {
     // get course id from url parameter
@@ -84,29 +97,68 @@ export default class CoursePage extends Component {
   }
 
   render() {
-    const { tasks, course } = this.state;
+    const { tasks, course, selectedStatus } = this.state;
+
     return (
       <div>
         <div className="border-bottom mb-3 p-3">
-          <h2 className="mr-5 pl-5 mb-4">{course.title}</h2>
+          <h5 className="text-capitalize">{course.platform}</h5>
+          <h2 className="mb-4">{course.title}</h2>
+
           <div className="d-flex justify-content-center">
-            <div class="btn-group btn-group-toggle mr-3" data-toggle="buttons">
-              <label class="btn btn-success active">
-                <input type="radio" name="options" id="option1" checked />
+            <div
+              className="btn-group btn-group-toggle mr-3"
+              data-toggle="buttons"
+            >
+              <label
+                className={
+                  selectedStatus === "active"
+                    ? "btn btn-success"
+                    : "btn btn-secondary"
+                }
+              >
+                <input
+                  type="radio"
+                  name="status"
+                  value="active"
+                  checked={selectedStatus === "active"}
+                  onChange={this.handleOptionChange}
+                />
                 Active
               </label>
-              <label class="btn btn-secondary">
-                <input type="radio" name="options" id="option2" /> Inactive
+              <label
+                className={
+                  selectedStatus === "inactive"
+                    ? "btn btn-success"
+                    : "btn btn-secondary"
+                }
+              >
+                <input
+                  type="radio"
+                  name="status"
+                  value="inactive"
+                  checked={selectedStatus === "inactive"}
+                  onChange={this.handleOptionChange}
+                />
+                Inactive
               </label>
-              <label class="btn btn-secondary">
-                <input type="radio" name="options" id="option3" /> Completed
+              <label
+                className={
+                  selectedStatus === "completed"
+                    ? "btn btn-success"
+                    : "btn btn-secondary"
+                }
+              >
+                <input
+                  type="radio"
+                  name="status"
+                  value="completed"
+                  checked={selectedStatus === "completed"}
+                  onChange={this.handleOptionChange}
+                />
+                Completed
               </label>
             </div>
-            {/* <div class="btn-group-toggle mr-3" data-toggle="buttons">
-              <label class="btn btn-success active">
-                <input type="checkbox" checked /> Active
-              </label>
-            </div> */}
 
             <a
               className="btn btn-danger mr-3"
@@ -119,8 +171,8 @@ export default class CoursePage extends Component {
             </a>
           </div>
         </div>
-
-        <ul className="list-group my-4 d-inline-block">
+        <h5 className="mt-4">To Do List</h5>
+        <ul className="list-group d-inline-block mt-2 mb-4">
           {tasks.map((task, i) => (
             <li
               className="list-group-item d-flex justify-content-between align-items-center p-1"
