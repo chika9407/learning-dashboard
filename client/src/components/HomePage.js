@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CourseCard from "./CourseCard";
 import api from "../services/api.js";
+import AddCourse from "./AddCourse";
 
 export default class HomePage extends Component {
   constructor(props) {

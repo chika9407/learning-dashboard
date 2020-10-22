@@ -9,6 +9,7 @@ export default class AllCourses extends Component {
       categories: [],
       courses: [],
       selectedCategory: "",
+      selectedStatus: "",
     };
   }
 
@@ -49,16 +50,40 @@ export default class AllCourses extends Component {
     this.setState({ courses, selectedCategory });
   };
 
+  //   handleSelectStatus = async (e) => {
+
+  //     let courses = [];
+  //     let selectedStatus = "";
+
+  //     if (e.target.value === "Status") {
+  //       // if default is selected, fetch all courses
+  //       courses = await api.getCourses();
+  //     } else {
+  //       // otherwise fetch courses of selected category
+  //       selectedCategory = e.target.value;
+
+  //       // find category id
+  //       const category_id = categories.find(
+  //         (category) => category.name === selectedCategory
+  //       ).id;
+
+  //       courses = await api.getCourses(category_id);
+  //     }
+
+  //     this.setState({ courses, selectedCategory });
+  //   };
+
   render() {
     const { courses, categories, selectedCategory } = this.state;
 
     return (
       <div>
         <h3>Courses</h3>
+
         <select
           className="form-control w-25 mx-auto"
           name="selectedCategory"
-          value={this.state.selectedCategory}
+          value={selectedCategory}
           onChange={this.handleSelect}
         >
           <option>All courses</option>
@@ -66,8 +91,19 @@ export default class AllCourses extends Component {
             <option key={i}>{category.name}</option>
           ))}
         </select>
+        {/* <select
+          className="form-control w-25 mx-auto"
+          name="selectedStatus"
+          value={this.state.selectedStatus}
+          onChange={this.handleSelectStatus}
+        >
+          <option>Status</option>
+          <option>Active</option>
+          <option>Inactive</option>
+          <option>Completed</option>
+        </select> */}
         <div className="d-flex flex-wrap justify-content-center">
-          {this.state.courses.map((course, i) => (
+          {courses.map((course, i) => (
             <CourseCard
               category={categories?.find((e) => e.id === course.category_id)}
               course={course}

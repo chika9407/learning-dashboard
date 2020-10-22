@@ -76,8 +76,8 @@ export default class AddCourse extends Component {
   render() {
     const { categories } = this.state;
     return (
-      <div className="d-inline-block w-75 mt-5">
-        <h2>Add a new course</h2>
+      <div className="d-inline-block w-50 mt-5">
+        <h3>Add a new course</h3>
         <form className="my-3">
           <input
             className="form-control mb-2"
@@ -120,7 +120,7 @@ export default class AddCourse extends Component {
           </div>
 
           <button
-            className="btn btn-outline-dark mt-2"
+            className="btn btn-outline-dark mt-2 px-3"
             onClick={this.addCourse}
           >
             Add
