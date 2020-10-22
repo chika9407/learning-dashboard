@@ -15,8 +15,7 @@ CREATE TABLE `courses` (
 	`platform` VARCHAR(255) NOT NULL,
 	`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`finished` TIMESTAMP,
-	`complete` BOOLEAN NOT NULL DEFAULT '0',
-	`active` BOOLEAN NOT NULL DEFAULT '0',
+	`status` VARCHAR(255) NOT NULL DEFAULT 'inactive',
 	`category_id` INT NOT NULL,
 	PRIMARY KEY (`id`)
 );

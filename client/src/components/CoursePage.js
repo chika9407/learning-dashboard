@@ -40,6 +40,11 @@ export default class CoursePage extends Component {
     this.props.history.push("/");
   }
 
+  // Activate course
+  // async updateCourse() {
+
+  // }
+
   async handleCompleteTask(id, complete) {
     // get course id from url parameter
     const course_id = this.props.match.params.id;
@@ -82,14 +87,37 @@ export default class CoursePage extends Component {
     const { tasks, course } = this.state;
     return (
       <div>
-        <div className="d-flex justify-content-center align-items-center border-bottom mb-3 p-3">
-          <h2 className="mr-5 pl-5">{course.title}</h2>
-          <a className="btn" onClick={() => this.deleteCourse(course.id)}>
-            <i className="fas fa-trash-alt"></i>
-          </a>
-          <a href={course.url} target="_blank" className="btn">
-            <i className="fas fa-external-link-alt"></i>
-          </a>
+        <div className="border-bottom mb-3 p-3">
+          <h2 className="mr-5 pl-5 mb-4">{course.title}</h2>
+          <div className="d-flex justify-content-center">
+            <div class="btn-group btn-group-toggle mr-3" data-toggle="buttons">
+              <label class="btn btn-success active">
+                <input type="radio" name="options" id="option1" checked />
+                Active
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" /> Inactive
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" /> Completed
+              </label>
+            </div>
+            {/* <div class="btn-group-toggle mr-3" data-toggle="buttons">
+              <label class="btn btn-success active">
+                <input type="checkbox" checked /> Active
+              </label>
+            </div> */}
+
+            <a
+              className="btn btn-danger mr-3"
+              onClick={() => this.deleteCourse(course.id)}
+            >
+              Delete course {/* <i className="fas fa-trash-alt"></i> */}
+            </a>
+            <a href={course.url} target="_blank" className="btn btn-primary">
+              Go to course <i className="fas fa-external-link-alt"></i>
+            </a>
+          </div>
         </div>
 
         <ul className="list-group my-4 d-inline-block">
