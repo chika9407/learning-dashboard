@@ -2,22 +2,22 @@ var express = require("express");
 var router = express.Router();
 const db = require("../model/helper");
 
-/* Collections */
+/* Categories */
 
-// GET list of collections
-router.get("/collections", function (req, res, next) {
-  db("SELECT * FROM collections;")
+// GET all categories
+router.get("/categories", function (req, res, next) {
+  db("SELECT * FROM categories;")
     .then((results) => {
       res.send(results.data);
     })
     .catch((err) => res.status(500).send(err));
 });
 
-// INSERT a new collection
-router.post("/collections", function (req, res, next) {
-  db(`INSERT INTO collections (name) VALUES ("${req.body.name}");`)
+// INSERT a new category
+router.post("/categories", function (req, res, next) {
+  db(`INSERT INTO categories (name) VALUES ("${req.body.name}");`)
     .then(() => {
-      res.send("New collection added");
+      res.send("New category added");
     })
     .catch((err) => res.status(500).send(err));
 });
@@ -44,10 +44,10 @@ router.get("/courses/:id", function (req, res, next) {
 
 // INSERT a new course
 router.post("/courses", function (req, res, next) {
-  const { title, url, platform, collection } = req.body;
+  const { title, url, platform, category_id } = req.body;
 
   db(
-    `INSERT INTO courses (title, url, platform, collection_id) VALUES ("${title}", "${url}", "${platform}", ${collection});`
+    `INSERT INTO courses (title, url, platform, category_id) VALUES ("${title}", "${url}", "${platform}", ${category_id});`
   )
     .then(() => {
       res.send("New course added");
@@ -68,14 +68,8 @@ router.put("/courses/:id", function (req, res, next) {
 
 // DELETE a course
 router.delete("/courses/:id", function (req, res, next) {
-  // first delete all tasks related to this course
-  db(`DELETE FROM tasks WHERE course_id = ${req.params.id};`)
-    .then(() =>
-      // then delete the course
-      db(`DELETE FROM courses WHERE id = ${req.params.id};`)
-        .then(() => res.send("Course deleted"))
-        .catch((err) => res.status(500).send(err))
-    )
+  db(`DELETE FROM courses WHERE id = ${req.params.id};`)
+    .then(() => res.send("Course deleted"))
     .catch((err) => res.status(500).send(err));
 });
 
@@ -93,7 +87,7 @@ router.get("/courses/:id/tasks", function (req, res, next) {
 // INSERT a new task
 router.post("/courses/:id/tasks", function (req, res, next) {
   db(
-    `INSERT INTO tasks (name, course_id) VALUES ("${req.body.name}", ${req.params.id});`
+    `INSERT INTO tasks (text, course_id) VALUES ("${req.body.text}", ${req.params.id});`
   )
     .then(() => {
       res.send("New task added");

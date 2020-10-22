@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import api from "../services/api.js";
 
 export default class AddCourse extends Component {
   constructor(props) {
@@ -7,17 +8,16 @@ export default class AddCourse extends Component {
       title: "",
       url: "",
       platform: "",
-      collection: undefined,
-      collections: [],
+      category: "",
+      categories: [],
     };
   }
 
-  getCollections = () => {
-    fetch(`/collections`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ collections: data }))
-      .catch((error) => console.log(error));
-  };
+  async componentDidMount() {
+    const categories = await api.getCategories();
+
+    this.setState({ categories });
+  }
 
   handleInput = (e) => {
     // Handle input from select
@@ -61,28 +61,20 @@ export default class AddCourse extends Component {
     this.setState({ [name]: value });
   };
 
-  addCourse = (e) => {
+  addCourse = async (e) => {
     e.preventDefault();
 
-    const newCourse = {
-      title: this.state.title,
-      url: this.state.url,
-      collection: this.state.collection,
-    };
+    const { title, url, platform, category, categories } = this.state;
 
-    fetch(`/courses`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCourse),
-    })
-      .then(() => console.log("Course added"))
-      .catch((err) => console.log(err));
+    const category_id = categories.find((e) => e.name === category).id;
+
+    console.log(category_id);
+
+    await api.addCourse(title, url, platform, category_id);
   };
 
   render() {
-    const { collections } = this.state;
+    const { categories } = this.state;
     return (
       <div className="d-inline-block w-75 mt-5">
         <h2>Add a new course</h2>
@@ -114,14 +106,14 @@ export default class AddCourse extends Component {
             <div className="col">
               <select
                 className="form-control"
-                id="collection"
-                name="collection"
-                value={this.state.collection}
+                id="category"
+                name="category"
+                value={this.state.category}
                 onChange={this.handleInput}
               >
-                <option>Choose collection</option>
-                {collections.map((collection, i) => (
-                  <option key={i}>{collection.name}</option>
+                <option>Choose category</option>
+                {categories.map((category, i) => (
+                  <option key={i}>{category.name}</option>
                 ))}
               </select>
             </div>

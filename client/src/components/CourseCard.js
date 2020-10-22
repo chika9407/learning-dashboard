@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import api from "../services/api.js";
 import "./CourseCard.css";
 
 export default class CourseCard extends Component {
@@ -12,9 +13,11 @@ export default class CourseCard extends Component {
   async getProgress() {
     const { id } = this.props.course;
 
-    // get and store tasks
-    const res = await fetch(`/courses/${id}/tasks`);
-    const tasks = await res.json();
+    // // get and store tasks
+    // const res = await fetch(`/courses/${id}/tasks`);
+    // const tasks = await res.json();
+
+    const tasks = await api.getTasks(id);
 
     const completedTasks = tasks.filter((task) => task.complete === 1);
 
@@ -29,14 +32,14 @@ export default class CourseCard extends Component {
   }
 
   render() {
-    const { course, collection } = this.props;
+    const { course, category } = this.props;
     const { progress } = this.state;
 
     return (
       <div className="card m-4 position-relative">
         <div className="card-body pt-3 text-left">
           <small className="card-subtitle text-muted mb-3">
-            {collection?.name}
+            {category?.name}
           </small>
           <Link to={`/courses/${course.id}`}>
             <h5 className="card-title">{course?.title}</h5>

@@ -7,7 +7,7 @@ export default class CoursePage extends Component {
     this.state = {
       course: {},
       tasks: [],
-      task: "",
+      text: "",
     };
   }
 
@@ -25,8 +25,8 @@ export default class CoursePage extends Component {
   }
 
   handleInput = (e) => {
-    const task = e.target.value;
-    this.setState({ task });
+    const text = e.target.value;
+    this.setState({ text });
   };
 
   // Delete course
@@ -72,10 +72,10 @@ export default class CoursePage extends Component {
     // get course id from url parameter
     const { id } = this.props.match.params;
 
-    await api.addTask(id, this.state.task);
+    await api.addTask(id, this.state.text);
 
     const tasks = await api.getTasks(id);
-    this.setState({ tasks, task: "" });
+    this.setState({ tasks, text: "" });
   }
 
   render() {
@@ -111,7 +111,7 @@ export default class CoursePage extends Component {
                     <i className="far fa-check-square"></i>
                   )}
                 </button>
-                {task.name}
+                {task.text}
               </span>
 
               <button
@@ -125,7 +125,7 @@ export default class CoursePage extends Component {
         </ul>
         <form className="form-inline justify-content-center">
           <input
-            value={this.state.task}
+            value={this.state.text}
             placeholder="New task..."
             className="form-control"
             onChange={(e) => this.handleInput(e)}

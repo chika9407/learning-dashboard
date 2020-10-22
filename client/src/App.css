@@ -2,3 +2,7 @@
   outline: none;
   box-shadow: none;
 }
+
+#sidebar {
+  left: 0;
+}
