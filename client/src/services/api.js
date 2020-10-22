@@ -25,15 +25,8 @@ export default {
 
   /* Courses */
 
-  // GET all courses
+  // GET courses
   async getCourses(category_id = "") {
-    const res = await fetch(`/courses?category_id=${category_id}`);
-    if (res.ok) return await res.json();
-    else throw new Error("Something went wrong");
-  },
-
-  // GET filtered courses
-  async getFilteredCourses(category_id) {
     const res = await fetch(`/courses?category_id=${category_id}`);
     if (res.ok) return await res.json();
     else throw new Error("Something went wrong");

@@ -18,6 +18,8 @@ export default class AllCourses extends Component {
       const categories = await api.getCategories();
       const courses = await api.getCourses();
 
+      console.log(courses);
+
       this.setState({ categories, courses });
     } catch (error) {
       console.log(error);
