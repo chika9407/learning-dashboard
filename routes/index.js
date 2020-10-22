@@ -26,7 +26,14 @@ router.post("/categories", function (req, res, next) {
 
 // GET list of courses
 router.get("/courses", function (req, res, next) {
-  db("SELECT * FROM courses;")
+  let category_id = req.query.category_id;
+
+  // if query parameter was given, filter results
+  const sql = category_id
+    ? `SELECT * FROM courses WHERE category_id = ${category_id};`
+    : `SELECT * FROM courses;`;
+
+  db(sql)
     .then((results) => {
       res.send(results.data);
     })

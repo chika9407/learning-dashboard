@@ -6,6 +6,7 @@ import CoursePage from "./components/CoursePage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
+import AllCourses from "./components/AllCourses";
 
 class App extends React.Component {
   render() {
@@ -21,6 +22,9 @@ class App extends React.Component {
               <AddCategory />
             </Route>
             <Route path="/courses/:id" component={CoursePage} />
+            <Route path="/courses">
+              <AllCourses />
+            </Route>
             <Route path="/">
               <HomePage />
             </Route>

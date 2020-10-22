@@ -22,6 +22,11 @@ export default class NavBar extends Component {
                 Add category
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/courses">
+                All courses
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>
