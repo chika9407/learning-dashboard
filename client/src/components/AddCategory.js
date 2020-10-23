@@ -17,7 +17,7 @@ export default class AddCategory extends Component {
   addCategory = async (e) => {
     e.preventDefault();
 
-    await api.addCategory(this.state.category);
+    await api.addCategory(this.state.category.toLowerCase());
 
     this.setState({ category: "" });
   };

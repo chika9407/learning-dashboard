@@ -3,6 +3,18 @@
   box-shadow: none;
 }
 
+#navbar {
+  position: relative;
+  left: 280px;
+}
+
 #sidebar {
+  position: fixed;
   left: 0;
+  width: 250px;
+}
+
+.container {
+  position: relative;
+  left: 130px;
 }

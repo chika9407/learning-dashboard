@@ -52,7 +52,7 @@ export default class CourseCard extends Component {
     return (
       <div className="card m-4 position-relative">
         <div className="card-body pt-3 text-left">
-          <small className="card-subtitle text-muted mb-3">
+          <small className="card-subtitle text-muted text-capitalize mb-3">
             {category?.name}
           </small>
           <Link to={`/courses/${course.id}`}>

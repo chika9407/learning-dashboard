@@ -2,21 +2,23 @@ import React, { Component } from "react";
 import CourseCard from "./CourseCard";
 import api from "../services/api.js";
 
-export default class HomePage extends Component {
+export default class CourseList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       categories: [],
       courses: [],
-      selected: "",
     };
   }
 
   async componentDidMount() {
+    // get course id from url parameter
+    const { categoryId } = this.props.match.params;
+
     try {
       // fetch all categories and courses
       const categories = await api.getCategories();
-      const courses = await api.getCourses();
+      const courses = await api.getCourses(categoryId);
 
       this.setState({ categories, courses });
     } catch (error) {
@@ -24,35 +26,24 @@ export default class HomePage extends Component {
     }
   }
 
-  handleSelect = (e) => {
-    this.setState({ selected: e.target.value });
-  };
+  async componentDidUpdate() {
+    // get course id from url parameter
+    const { categoryId } = this.props.match.params;
 
-  filteredCourses = () => {
-    const { courses, selected } = this.state;
-    if (!selected) return courses;
-    else return courses.filter((course) => course.status === selected);
-  };
+    try {
+      const courses = await api.getCourses(categoryId);
+
+      this.setState({ courses });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
-    const { categories, selected } = this.state;
-    const courses = this.filteredCourses();
+    const { categories, courses } = this.state;
 
     return (
       <div className="pt-3">
-        <div className="d-flex">
-          <h2>My List</h2>
-          <select
-            className="form-control w-auto ml-4"
-            value={selected}
-            onChange={this.handleSelect}
-          >
-            <option value="">Select status...</option>
-            <option value="active">active</option>
-            <option value="inactive">inactive</option>
-            <option value="completed">completed</option>
-          </select>
-        </div>
         <div className="d-flex flex-wrap">
           {courses.map((course, i) => (
             <div
