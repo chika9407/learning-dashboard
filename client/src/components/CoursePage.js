@@ -100,19 +100,19 @@ export default class CoursePage extends Component {
     const { tasks, course, selectedStatus } = this.state;
 
     return (
-      <div>
+      <div className="mt-5 text-left ml-5">
         <div className="border-bottom mb-3 p-3">
           <h5 className="text-capitalize">{course.platform}</h5>
           <h2 className="mb-4">{course.title}</h2>
 
-          <div className="d-flex justify-content-center">
+          <div className="d-flex mb-3">
             <div
               className="btn-group btn-group-toggle mr-3"
               data-toggle="buttons"
             >
               <label
                 className={
-                  selectedStatus === "active"
+                  selectedStatus === "in progress"
                     ? "btn btn-success"
                     : "btn btn-secondary"
                 }
@@ -120,15 +120,15 @@ export default class CoursePage extends Component {
                 <input
                   type="radio"
                   name="status"
-                  value="active"
-                  checked={selectedStatus === "active"}
+                  value="in progress"
+                  checked={selectedStatus === "in progress"}
                   onChange={this.handleOptionChange}
                 />
-                Active
+                in progress
               </label>
               <label
                 className={
-                  selectedStatus === "inactive"
+                  selectedStatus === "on hold"
                     ? "btn btn-success"
                     : "btn btn-secondary"
                 }
@@ -136,11 +136,11 @@ export default class CoursePage extends Component {
                 <input
                   type="radio"
                   name="status"
-                  value="inactive"
-                  checked={selectedStatus === "inactive"}
+                  value="on hold"
+                  checked={selectedStatus === "on hold"}
                   onChange={this.handleOptionChange}
                 />
-                Inactive
+                on hold
               </label>
               <label
                 className={
@@ -156,23 +156,22 @@ export default class CoursePage extends Component {
                   checked={selectedStatus === "completed"}
                   onChange={this.handleOptionChange}
                 />
-                Completed
+                completed
               </label>
             </div>
-
-            <a
-              className="btn btn-danger mr-3"
-              onClick={() => this.deleteCourse(course.id)}
-            >
-              Delete course {/* <i className="fas fa-trash-alt"></i> */}
-            </a>
-            <a href={course.url} target="_blank" className="btn btn-primary">
-              Go to course <i className="fas fa-external-link-alt"></i>
-            </a>
           </div>
+          <a
+            className="btn btn-danger mr-3"
+            onClick={() => this.deleteCourse(course.id)}
+          >
+            Delete course {/* <i className="fas fa-trash-alt"></i> */}
+          </a>
+          <a href={course.url} target="_blank" className="btn btn-primary">
+            Go to course <i className="fas fa-external-link-alt"></i>
+          </a>
         </div>
         <h5 className="mt-4">To Do List</h5>
-        <ul className="list-group d-inline-block mt-2 mb-4">
+        <ul className="list-group w-25 mt-2 mb-4">
           {tasks.map((task, i) => (
             <li
               className="list-group-item d-flex justify-content-between align-items-center p-1"
@@ -203,11 +202,11 @@ export default class CoursePage extends Component {
             </li>
           ))}
         </ul>
-        <form className="form-inline justify-content-center">
+        <form className="form-inline ">
           <input
             value={this.state.text}
             placeholder="New task..."
-            className="form-control"
+            className="form-control mr-2"
             onChange={(e) => this.handleInput(e)}
           />
           <button

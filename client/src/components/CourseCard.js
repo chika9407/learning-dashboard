@@ -6,34 +6,60 @@ import "./CourseCard.css";
 export default class CourseCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { progress: 0 };
+    this.state = { tasks: [] };
   }
 
-  // can I get tasks from the course page?
-  async getProgress() {
+  // getProgress = async () => {
+  //   const { id } = this.props.course;
+
+  //   console.log(id);
+
+  //   const tasks = await api.getTasks(id);
+
+  //   console.log("tasks", tasks);
+
+  //   const completedTasks = tasks.filter((task) => task.complete === 1);
+
+  //   let progress = 0;
+
+  //   if (tasks.length && completedTasks.length) {
+  //     // calculate progress based on completed tasks
+  //     progress = (completedTasks.length / tasks.length) * 100;
+  //   }
+  //   this.setState({ progress });
+
+  //   console.log("in function", progress);
+  // };
+
+  async componentDidMount() {
     const { id } = this.props.course;
-
-    // // get and store tasks
-    // const res = await fetch(`/courses/${id}/tasks`);
-    // const tasks = await res.json();
-
     const tasks = await api.getTasks(id);
+    this.setState({ tasks });
 
-    const completedTasks = tasks.filter((task) => task.complete === 1);
-
-    // calculate progress based on completed tasks
-    const progress = (completedTasks.length / tasks.length) * 100;
-
-    this.setState({ progress });
-  }
-
-  componentDidMount() {
-    this.getProgress();
+    // this.getProgress();
   }
 
   render() {
     const { course, category } = this.props;
-    const { progress } = this.state;
+    const { tasks } = this.state;
+    const completedTasks = tasks.filter((task) => task.complete === 1);
+
+    console.log(
+      course.title,
+      "id = ",
+      course.id,
+      ": ",
+      tasks,
+      "completed: ",
+      completedTasks
+    );
+
+    const progress =
+      tasks.length && completedTasks.length
+        ? (completedTasks.length / tasks.length) * 100
+        : 0;
+
+    console.log("in render", progress);
 
     let statusClassName = "border px-1 rounded d-inline-block ";
 
@@ -42,8 +68,8 @@ export default class CourseCard extends Component {
       case "completed":
         statusClassName += "text-success border-success";
         break;
-      case "active":
-        statusClassName += "text-warning border-warning";
+      case "in progress":
+        statusClassName += "text-primary border-primary";
         break;
       default:
         statusClassName += "text-secondary border-secondary";
@@ -68,11 +94,10 @@ export default class CourseCard extends Component {
               Go to course<i className="fas fa-external-link-alt mx-2 mb-2"></i>
             </a>
 
-            <div className="progress" style={{ height: "10px" }}>
-              <div
-                className="progress-bar"
-                style={{ width: `${progress}%` }}
-              ></div>
+            <div className="progress" style={{ height: "15px" }}>
+              <div className="progress-bar" style={{ width: `${progress}%` }}>
+                {Math.round(progress)}%
+              </div>
             </div>
           </div>
         </div>

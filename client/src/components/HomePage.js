@@ -8,6 +8,7 @@ export default class HomePage extends Component {
     this.state = {
       categories: [],
       courses: [],
+
       selected: "",
     };
   }
@@ -39,25 +40,27 @@ export default class HomePage extends Component {
     const courses = this.filteredCourses();
 
     return (
-      <div className="pt-5">
-        <div className="d-flex">
+      <div className="pt-5 ml-5">
+        <div className="d-flex ml-4">
           <h2>My List</h2>
           <select
             className="form-control w-auto ml-4"
             value={selected}
             onChange={this.handleSelect}
           >
-            <option value="">Select status...</option>
-            <option value="active">active</option>
-            <option value="inactive">inactive</option>
-            <option value="completed">completed</option>
+            <option value="">All courses</option>
+            <option value="in progress">In progress</option>
+            <option value="on hold">On hold</option>
+            <option value="completed">Completed</option>
           </select>
         </div>
         <div className="d-flex flex-wrap">
           {courses.map((course, i) => (
             <div
               key={i}
-              className={course.status === "active" ? "order-1" : "order-2"}
+              className={
+                course.status === "in progress" ? "order-1" : "order-2"
+              }
             >
               <CourseCard
                 category={categories?.find((e) => e.id === course.category_id)}

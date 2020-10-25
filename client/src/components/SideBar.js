@@ -75,7 +75,7 @@ export default class SideBar extends Component {
             Categories
           </Link>
           {categories.map((category, i) => (
-            <div className="d-flex justify-content-between">
+            <div key={i} className="d-flex justify-content-between">
               <Link
                 className={
                   selected === category.id
@@ -84,7 +84,6 @@ export default class SideBar extends Component {
                 }
                 onClick={() => this.handleClick(category.id)}
                 to={`/${category.id}`}
-                key={i}
               >
                 {category.name}
               </Link>
