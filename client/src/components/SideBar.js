@@ -18,15 +18,34 @@ export default class SideBar extends Component {
     }
   }
 
+  handleClick = (id) => {
+    this.setState({ selected: id });
+  };
+
+  handleReset = () => {
+    this.setState({ selected: 0 });
+  };
+
   render() {
-    const { categories } = this.state;
+    const { categories, selected } = this.state;
     return (
       <div className="vh-100 d-inline-block border-right" id="sidebar">
         <nav className="nav flex-column mt-5 mx-3 nav-pills">
-          <span className="navbar-text">Categories</span>
+          <Link
+            className="navbar-text ml-3 text-secondary font-weight-bold"
+            onClick={this.handleReset}
+            to="/"
+          >
+            Categories
+          </Link>
           {categories.map((category, i) => (
             <Link
-              className="nav-link text-capitalize"
+              className={
+                selected === category.id
+                  ? "active nav-link text-capitalize"
+                  : "nav-link text-capitalize"
+              }
+              onClick={() => this.handleClick(category.id)}
               to={`/${category.id}`}
               key={i}
             >
