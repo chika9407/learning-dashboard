@@ -1,39 +1,38 @@
 import React from "react";
 import "./App.css";
 import AddCourse from "./components/AddCourse";
-import AddCategory from "./components/AddCategory";
 import CoursePage from "./components/CoursePage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
-import AllCourses from "./components/AllCourses";
 import SideBar from "./components/SideBar";
-import CourseList from "./components/CourseList";
+import CategoryPage from "./components/CategoryPage";
 
 class App extends React.Component {
   render() {
     return (
       <Router>
         <NavBar />
-        <SideBar />
-        <div className="app container p-4">
-          <Switch>
-            <Route path="/addcourse">
-              <AddCourse />
-            </Route>
-            <Route path="/addcategory">
-              <AddCategory />
-            </Route>
-            <Route path="/courses/:id" component={CoursePage} />
-            <Route path="/courses">
-              <AllCourses />
-            </Route>
-            <Route path="/:categoryId" component={CourseList} />
+        <div className="container-fluid">
+          <div className="row vh-100">
+            <div className="col-2 border-right ">
+              <SideBar />
+            </div>
+            <div className="col-10 text-center pl-5">
+              <Switch>
+                <Route path="/addcourse">
+                  <AddCourse />
+                </Route>
+                <Route path="/courses/:id" component={CoursePage} />
 
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-          </Switch>
+                <Route path="/:categoryId" component={CategoryPage} />
+
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+              </Switch>
+            </div>
+          </div>
         </div>
       </Router>
     );

@@ -23,6 +23,17 @@ export default {
     else throw new Error("Something went wrong");
   },
 
+  // DELETE category
+  async deleteCategory(id) {
+    const res = await fetch(`/categories/${id}`, {
+      method: "DELETE",
+    });
+    console.log(res);
+
+    if (res.ok) return;
+    else throw new Error("Something went wrong");
+  },
+
   /* Courses */
 
   // GET courses

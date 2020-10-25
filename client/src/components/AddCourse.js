@@ -76,7 +76,7 @@ export default class AddCourse extends Component {
   render() {
     const { categories } = this.state;
     return (
-      <div className="d-inline-block w-50 mt-5">
+      <div className="w-50 mt-5 mx-auto">
         <h3>Add a new course</h3>
         <form className="my-3">
           <input

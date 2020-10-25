@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CourseCard from "./CourseCard";
 import api from "../services/api.js";
 
-export default class CourseList extends Component {
+export default class CategoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +39,20 @@ export default class CourseList extends Component {
     }
   }
 
+  handleDelete = async () => {
+    // get course id from url parameter
+    const { categoryId } = this.props.match.params;
+
+    try {
+      await api.deleteCategory(categoryId);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // navigate back to home page
+    this.props.history.push("/");
+  };
+
   render() {
     const { categories, courses } = this.state;
 
@@ -57,6 +71,7 @@ export default class CourseList extends Component {
             </div>
           ))}
         </div>
+        {courses.length === 0 && <p className="mt-5 text-left">No courses</p>}
       </div>
     );
   }

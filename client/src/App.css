@@ -5,16 +5,9 @@
 
 #navbar {
   position: relative;
-  left: 280px;
+  left: 360px;
 }
 
-#sidebar {
-  position: fixed;
-  left: 0;
-  width: 250px;
-}
-
-.container {
-  position: relative;
-  left: 130px;
+.dropdown-menu {
+  z-index: 5;
 }

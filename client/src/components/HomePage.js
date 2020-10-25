@@ -39,7 +39,7 @@ export default class HomePage extends Component {
     const courses = this.filteredCourses();
 
     return (
-      <div className="pt-3">
+      <div className="pt-5">
         <div className="d-flex">
           <h2>My List</h2>
           <select

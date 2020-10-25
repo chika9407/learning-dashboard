@@ -48,11 +48,25 @@ export default class SideBar extends Component {
     }
   };
 
+  deleteCategory = async (id) => {
+    try {
+      await api.deleteCategory(id);
+      // Fetch categories again to reflect changes in sidebar
+      const categories = await api.getCategories();
+      this.setState({ categories });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // navigate back to home page
+    if (this.props.history) this.props.history.push("/");
+  };
+
   render() {
     const { categories, selected, newCategory } = this.state;
     return (
-      <div className="vh-100 d-inline-block border-right" id="sidebar">
-        <nav className="nav flex-column mt-5 mx-3 nav-pills">
+      <div className="">
+        <nav className="nav flex-column mt-5">
           <Link
             className="navbar-text ml-3 text-secondary font-weight-bold"
             onClick={this.handleReset}
@@ -61,29 +75,49 @@ export default class SideBar extends Component {
             Categories
           </Link>
           {categories.map((category, i) => (
-            <Link
-              className={
-                selected === category.id
-                  ? "active nav-link text-capitalize"
-                  : "nav-link text-capitalize"
-              }
-              onClick={() => this.handleClick(category.id)}
-              to={`/${category.id}`}
-              key={i}
-            >
-              {category.name}
-            </Link>
+            <div className="d-flex justify-content-between">
+              <Link
+                className={
+                  selected === category.id
+                    ? "active nav-link text-capitalize"
+                    : "nav-link text-capitalize"
+                }
+                onClick={() => this.handleClick(category.id)}
+                to={`/${category.id}`}
+                key={i}
+              >
+                {category.name}
+              </Link>
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                data-toggle="dropdown"
+              ></a>
+              <div className="dropdown-menu">
+                <a className="dropdown-item" href="#">
+                  Rename
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={() => this.deleteCategory(category.id)}
+                >
+                  Delete
+                </a>
+              </div>
+            </div>
           ))}
-          <form className="form-inline my-3 ml-2">
+          <form className="form-inline mt-3">
             <input
-              className="form-control"
+              className="form-control w-75"
               name="category"
-              value={this.state.newCategory}
+              value={newCategory}
               onChange={this.handleInput}
-              placeholder="Add a category..."
+              placeholder="Category..."
             />
             <button
-              className="btn btn-outline-dark mt-2"
+              className="btn btn-outline-dark px-2"
               onClick={this.addCategory}
             >
               Add

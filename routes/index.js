@@ -22,6 +22,13 @@ router.post("/categories", function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
+// DELETE a category
+router.delete("/categories/:id", function (req, res, next) {
+  db(`DELETE FROM categories WHERE id = ${req.params.id};`)
+    .then(() => res.send("Category deleted"))
+    .catch((err) => res.status(500).send(err));
+});
+
 /* Courses */
 
 // GET list of courses
