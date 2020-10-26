@@ -63,14 +63,27 @@ export default {
     else throw new Error("Something went wrong");
   },
 
-  // PUT to update course
-  async updateCourse(id, status) {
+  // PUT to update course status
+  async updateCourseStatus(id, status) {
     const res = await fetch(`/courses/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: status }),
+      body: JSON.stringify({ status }),
+    });
+    if (res.ok) return;
+    else throw new Error("Something went wrong");
+  },
+
+  // PUT to update course progress
+  async updateCourseProgress(id, progress) {
+    const res = await fetch(`/courses/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ progress }),
     });
     if (res.ok) return;
     else throw new Error("Something went wrong");

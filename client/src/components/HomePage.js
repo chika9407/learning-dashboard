@@ -58,9 +58,9 @@ export default class HomePage extends Component {
           {courses.map((course, i) => (
             <div
               key={i}
-              className={
-                course.status === "in progress" ? "order-1" : "order-2"
-              }
+              // className={
+              //   course.status === "in progress" ? "order-1" : "order-2"
+              // }
             >
               <CourseCard
                 category={categories?.find((e) => e.id === course.category_id)}

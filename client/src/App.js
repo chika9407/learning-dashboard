@@ -23,9 +23,9 @@ class App extends React.Component {
                 <Route path="/addcourse">
                   <AddCourse />
                 </Route>
-                <Route path="/courses/:id" component={CoursePage} />
+                <Route path="/courses/:course_id" component={CoursePage} />
 
-                <Route path="/:categoryId" component={CategoryPage} />
+                <Route path="/:category_id" component={CategoryPage} />
 
                 <Route exact path="/">
                   <HomePage />

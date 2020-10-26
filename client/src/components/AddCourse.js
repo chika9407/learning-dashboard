@@ -68,8 +68,6 @@ export default class AddCourse extends Component {
 
     const category_id = categories.find((e) => e.name === category).id;
 
-    console.log(category_id);
-
     await api.addCourse(title, url, platform, category_id);
   };
 

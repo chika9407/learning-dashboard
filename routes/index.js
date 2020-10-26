@@ -69,10 +69,13 @@ router.post("/courses", function (req, res, next) {
     .catch((err) => res.status(500).send(err));
 });
 
-// UPDATE a course
+// UPDATE course
 router.put("/courses/:id", function (req, res, next) {
+  // get name of column to update
+  const prop = Object.keys(req.body)[0];
+
   db(
-    `UPDATE courses SET status = "${req.body.status}" WHERE id = ${req.params.id};`
+    `UPDATE courses SET ${prop} = "${req.body[prop]}" WHERE id = ${req.params.id};`
   )
     .then(() => {
       res.send("Course updated");

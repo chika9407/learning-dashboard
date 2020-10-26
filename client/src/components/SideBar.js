@@ -20,8 +20,8 @@ export default class SideBar extends Component {
 
   // Nav methods
 
-  handleClick = (id) => {
-    this.setState({ selected: id });
+  handleClick = (category_id) => {
+    this.setState({ selected: category_id });
   };
 
   handleReset = () => {
@@ -39,7 +39,7 @@ export default class SideBar extends Component {
 
     try {
       // Add new category to database
-      await api.addCategory(this.state.newCategory.toLowerCase());
+      await api.addCategory(this.state.newCategory);
       // Fetch categories again to reflect changes in sidebar
       const categories = await api.getCategories();
       this.setState({ categories, newCategory: "" });
@@ -48,9 +48,9 @@ export default class SideBar extends Component {
     }
   };
 
-  deleteCategory = async (id) => {
+  deleteCategory = async (category_id) => {
     try {
-      await api.deleteCategory(id);
+      await api.deleteCategory(category_id);
       // Fetch categories again to reflect changes in sidebar
       const categories = await api.getCategories();
       this.setState({ categories });
@@ -79,8 +79,8 @@ export default class SideBar extends Component {
               <Link
                 className={
                   selected === category.id
-                    ? "active nav-link text-capitalize"
-                    : "nav-link text-capitalize"
+                    ? "active nav-link text-dark"
+                    : "nav-link text-dark"
                 }
                 onClick={() => this.handleClick(category.id)}
                 to={`/${category.id}`}
@@ -88,11 +88,13 @@ export default class SideBar extends Component {
                 {category.name}
               </Link>
               <a
-                className="nav-link dropdown-toggle"
+                className="nav-link dropdown-toggle px-0 text-dark"
                 href="#"
                 id="navbarDropdown"
                 data-toggle="dropdown"
-              ></a>
+              >
+                <i className="fas fa-ellipsis-h p-0 m-0"></i>
+              </a>
               <div className="dropdown-menu">
                 <a className="dropdown-item" href="#">
                   Rename
@@ -116,7 +118,7 @@ export default class SideBar extends Component {
               placeholder="Category..."
             />
             <button
-              className="btn btn-outline-dark px-2"
+              className="btn btn-outline-dark px-2 ml-1"
               onClick={this.addCategory}
             >
               Add

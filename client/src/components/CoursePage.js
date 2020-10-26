@@ -14,11 +14,11 @@ export default class CoursePage extends Component {
 
   async componentDidMount() {
     // get course id from url parameter
-    const { id } = this.props.match.params;
+    const { course_id } = this.props.match.params;
 
     try {
-      const course = await api.getCourse(id);
-      const tasks = await api.getTasks(id);
+      const course = await api.getCourse(course_id);
+      const tasks = await api.getTasks(course_id);
       this.setState({ course, tasks, selectedStatus: course.status });
     } catch (error) {
       console.log(error);
@@ -32,15 +32,20 @@ export default class CoursePage extends Component {
   handleOptionChange = (e) => {
     this.setState({ selectedStatus: e.target.value });
 
+    console.log(e.target.value);
+
+    // get course id from url parameter
+    const { course_id } = this.props.match.params;
+
     // Update the status in the database
-    this.updateCourse(this.state.course.id, e.target.value);
+    this.updateCourseStatus(course_id, e.target.value);
   };
 
   // Update course status
-  async updateCourse(id, status) {
+  async updateCourseStatus(course_id, status) {
     try {
-      await api.updateCourse(id, status);
-      const course = await api.getCourse(id);
+      await api.updateCourseStatus(course_id, status);
+      const course = await api.getCourse(course_id);
       this.setState({ course });
     } catch (error) {
       console.log(error);
@@ -48,9 +53,9 @@ export default class CoursePage extends Component {
   }
 
   // Delete course
-  async deleteCourse(id) {
+  async deleteCourse(course_id) {
     try {
-      await api.deleteCourse(id);
+      await api.deleteCourse(course_id);
     } catch (error) {
       console.log(error);
     }
@@ -58,25 +63,34 @@ export default class CoursePage extends Component {
     this.props.history.push("/");
   }
 
-  async handleCompleteTask(id, complete) {
+  async handleCompleteTask(task_id, complete) {
     // get course id from url parameter
-    const course_id = this.props.match.params.id;
+    const { course_id } = this.props.match.params;
 
     try {
-      await api.updateTask(id, complete);
+      await api.updateTask(task_id, complete);
       const tasks = await api.getTasks(course_id);
       this.setState({ tasks });
+
+      // calculate progress based on completed tasks
+      const completedTasks = tasks.filter((task) => task.complete === 1);
+      const progress = (completedTasks.length / tasks.length) * 100;
+      await api.updateCourseProgress(course_id, progress);
+
+      // fetch course info again
+      const course = await api.getCourse(course_id);
+      this.setState({ course });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async deleteTask(id) {
+  async deleteTask(task_id) {
     // get course id from url parameter
-    const course_id = this.props.match.params.id;
+    const { course_id } = this.props.match.params;
 
     try {
-      await api.deleteTask(id);
+      await api.deleteTask(task_id);
       const tasks = await api.getTasks(course_id);
       this.setState({ tasks });
     } catch (error) {
@@ -88,12 +102,17 @@ export default class CoursePage extends Component {
     e.preventDefault();
 
     // get course id from url parameter
-    const { id } = this.props.match.params;
+    const { course_id } = this.props.match.params;
 
-    await api.addTask(id, this.state.text);
+    await api.addTask(course_id, this.state.text);
 
-    const tasks = await api.getTasks(id);
+    const tasks = await api.getTasks(course_id);
     this.setState({ tasks, text: "" });
+
+    // update progress
+    const completedTasks = tasks.filter((task) => task.complete === 1);
+    const progress = (completedTasks.length / tasks.length) * 100;
+    await api.updateCourseProgress(course_id, progress);
   }
 
   render() {
@@ -112,22 +131,6 @@ export default class CoursePage extends Component {
             >
               <label
                 className={
-                  selectedStatus === "in progress"
-                    ? "btn btn-success"
-                    : "btn btn-secondary"
-                }
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="in progress"
-                  checked={selectedStatus === "in progress"}
-                  onChange={this.handleOptionChange}
-                />
-                in progress
-              </label>
-              <label
-                className={
                   selectedStatus === "on hold"
                     ? "btn btn-success"
                     : "btn btn-secondary"
@@ -138,9 +141,25 @@ export default class CoursePage extends Component {
                   name="status"
                   value="on hold"
                   checked={selectedStatus === "on hold"}
-                  onChange={this.handleOptionChange}
+                  onClick={this.handleOptionChange}
                 />
                 on hold
+              </label>
+              <label
+                className={
+                  selectedStatus === "in progress"
+                    ? "btn btn-success"
+                    : "btn btn-secondary"
+                }
+              >
+                <input
+                  type="radio"
+                  name="status"
+                  value="in progress"
+                  checked={selectedStatus === "in progress"}
+                  onClick={this.handleOptionChange}
+                />
+                in progress
               </label>
               <label
                 className={
@@ -154,7 +173,7 @@ export default class CoursePage extends Component {
                   name="status"
                   value="completed"
                   checked={selectedStatus === "completed"}
-                  onChange={this.handleOptionChange}
+                  onClick={this.handleOptionChange}
                 />
                 completed
               </label>

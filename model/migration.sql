@@ -16,6 +16,7 @@ CREATE TABLE `courses` (
 	`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`finished` TIMESTAMP,
 	`status` VARCHAR(255) NOT NULL DEFAULT 'on hold',
+	`progress` INT NOT NULL DEFAULT '0',
 	`category_id` INT NOT NULL,
 	PRIMARY KEY (`id`)
 );

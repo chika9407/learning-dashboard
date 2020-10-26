@@ -13,12 +13,12 @@ export default class CategoryPage extends Component {
 
   async componentDidMount() {
     // get course id from url parameter
-    const { categoryId } = this.props.match.params;
+    const { category_id } = this.props.match.params;
 
     try {
       // fetch all categories and courses
       const categories = await api.getCategories();
-      const courses = await api.getCourses(categoryId);
+      const courses = await api.getCourses(category_id);
 
       this.setState({ categories, courses });
     } catch (error) {
@@ -28,10 +28,10 @@ export default class CategoryPage extends Component {
 
   async componentDidUpdate() {
     // get course id from url parameter
-    const { categoryId } = this.props.match.params;
+    const { category_id } = this.props.match.params;
 
     try {
-      const courses = await api.getCourses(categoryId);
+      const courses = await api.getCourses(category_id);
 
       this.setState({ courses });
     } catch (error) {
@@ -41,10 +41,10 @@ export default class CategoryPage extends Component {
 
   handleDelete = async () => {
     // get course id from url parameter
-    const { categoryId } = this.props.match.params;
+    const { category_id } = this.props.match.params;
 
     try {
-      await api.deleteCategory(categoryId);
+      await api.deleteCategory(category_id);
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +62,7 @@ export default class CategoryPage extends Component {
           {courses.map((course, i) => (
             <div
               key={i}
-              className={course.status === "active" ? "order-1" : "order-2"}
+              // className={course.status === "active" ? "order-1" : "order-2"}
             >
               <CourseCard
                 category={categories?.find((e) => e.id === course.category_id)}
@@ -71,7 +71,7 @@ export default class CategoryPage extends Component {
             </div>
           ))}
         </div>
-        {courses.length === 0 && <p className="mt-5 text-left">No courses</p>}
+        {!courses.length && <p className="mt-5 text-left">No courses</p>}
       </div>
     );
   }

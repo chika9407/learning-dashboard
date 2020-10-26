@@ -11,3 +11,7 @@
 .dropdown-menu {
   z-index: 5;
 }
+
+.dropdown-toggle::after {
+  display: none;
+}

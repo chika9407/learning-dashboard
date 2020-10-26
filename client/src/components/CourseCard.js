@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import api from "../services/api.js";
 import "./CourseCard.css";
 
 export default class CourseCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { tasks: [] };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { tasks: [] };
+  // }
 
   // getProgress = async () => {
   //   const { id } = this.props.course;
@@ -31,35 +30,43 @@ export default class CourseCard extends Component {
   //   console.log("in function", progress);
   // };
 
-  async componentDidMount() {
-    const { id } = this.props.course;
-    const tasks = await api.getTasks(id);
-    this.setState({ tasks });
+  // async componentDidMount() {
+  //   const { id } = this.props.course;
+  //   const tasks = await api.getTasks(id);
+  //   this.setState({ tasks });
 
-    // this.getProgress();
-  }
+  //   // this.getProgress();
+  // }
+
+  // async componentDidUpdate() {
+  //   const { id } = this.props.course;
+  //   const tasks = await api.getTasks(id);
+  //   this.setState({ tasks });
+
+  //   // this.getProgress();
+  // }
 
   render() {
     const { course, category } = this.props;
-    const { tasks } = this.state;
-    const completedTasks = tasks.filter((task) => task.complete === 1);
+    // const { tasks } = this.state;
+    // const completedTasks = tasks.filter((task) => task.complete === 1);
 
-    console.log(
-      course.title,
-      "id = ",
-      course.id,
-      ": ",
-      tasks,
-      "completed: ",
-      completedTasks
-    );
+    // console.log(
+    //   course.title,
+    //   "id = ",
+    //   course.id,
+    //   ": ",
+    //   tasks,
+    //   "completed: ",
+    //   completedTasks
+    // );
 
-    const progress =
-      tasks.length && completedTasks.length
-        ? (completedTasks.length / tasks.length) * 100
-        : 0;
+    // const progress =
+    //   tasks.length && completedTasks.length
+    //     ? (completedTasks.length / tasks.length) * 100
+    //     : 0;
 
-    console.log("in render", progress);
+    // console.log("in render", progress);
 
     let statusClassName = "border px-1 rounded d-inline-block ";
 
@@ -95,8 +102,11 @@ export default class CourseCard extends Component {
             </a>
 
             <div className="progress" style={{ height: "15px" }}>
-              <div className="progress-bar" style={{ width: `${progress}%` }}>
-                {Math.round(progress)}%
+              <div
+                className="progress-bar"
+                style={{ width: `${course.progress}%` }}
+              >
+                {Math.round(course.progress)}%
               </div>
             </div>
           </div>

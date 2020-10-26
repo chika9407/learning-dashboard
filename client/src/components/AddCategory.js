@@ -17,7 +17,7 @@ export default class AddCategory extends Component {
   addCategory = async (e) => {
     e.preventDefault();
 
-    await api.addCategory(this.state.category.toLowerCase());
+    await api.addCategory(this.state.category);
 
     this.setState({ category: "" });
   };
@@ -31,7 +31,7 @@ export default class AddCategory extends Component {
           <input
             className="form-control mb-2"
             name="category"
-            value={this.state.category}
+            value={category}
             onChange={this.handleInput}
             placeholder="Category"
           />
