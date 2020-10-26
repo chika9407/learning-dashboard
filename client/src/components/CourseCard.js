@@ -68,24 +68,25 @@ export default class CourseCard extends Component {
 
     // console.log("in render", progress);
 
-    let statusClassName = "border px-1 rounded d-inline-block ";
+    // let statusClassName = "border px-1 rounded d-inline-block ";
+    let statusClassName = "badge px-1 d-inline-block ";
 
     // determine color of status label
     switch (course.status) {
       case "completed":
-        statusClassName += "text-success border-success";
+        statusClassName += "badge-success";
         break;
       case "in progress":
-        statusClassName += "text-primary border-primary";
+        statusClassName += "badge-primary";
         break;
       default:
-        statusClassName += "text-secondary border-secondary";
+        statusClassName += "badge-secondary";
     }
 
     return (
       <div className="card m-4 position-relative">
-        <div className="card-body pt-3 text-left">
-          <small className="card-subtitle text-muted text-capitalize mb-3">
+        <div className="card-body pt-2 pr-2 text-left">
+          <small className="card-subtitle text-muted text-capitalize mt-2 d-block">
             {category?.name}
           </small>
           <Link to={`/courses/${course.id}`}>
@@ -94,11 +95,11 @@ export default class CourseCard extends Component {
           <h6 className="card-subtitle text-capitalize text-muted mb-1">
             {course.platform}
           </h6>
-          <small className={statusClassName}>{course?.status}</small>
+          <span className={statusClassName}>{course?.status}</span>
 
           <div className="footer text-right position-absolute ">
             <a href={course?.url} target="_blank" className="card-link">
-              Go to course<i className="fas fa-external-link-alt mx-2 mb-2"></i>
+              Start course<i className="fas fa-external-link-alt mx-2 mb-2"></i>
             </a>
 
             <div className="progress" style={{ height: "15px" }}>

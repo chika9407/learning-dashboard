@@ -6,7 +6,7 @@ INSERT INTO courses (title, url, platform, category_id, status, progress) VALUES
 INSERT INTO courses (title, url, platform, category_id, status, progress) VALUES ("CS50 Understanding Technology", "https://www.edx.org/course/cs50s-understanding-technology", "edx", 1, "completed", 100);
 INSERT INTO courses (title, url, platform, category_id, status, progress) VALUES ("Algorithms Part 1", "https://www.coursera.org/learn/algorithms-part1", "edx", 1, "in progress", 50);
 
-INSERT INTO courses (title, url, platform, category_id, status, progress) VALUES ("Learn SQL Basics Data Science", "https://www.coursera.org/specializations/learn-sql-basics-data-science", "coursera", 2, "in progress", 25);
+INSERT INTO courses (title, url, platform, category_id, status, progress) VALUES ("Learn SQL Basics", "https://www.coursera.org/specializations/learn-sql-basics-data-science", "coursera", 2, "in progress", 25);
 
 INSERT INTO courses (title, url, platform, category_id) VALUES ("Complete Intro to React", "https://frontendmasters.com/courses/complete-react-v5/", "frontend masters", 3);
 INSERT INTO courses (title, url, platform, category_id) VALUES ("React The Complete Guide incl Redux", "https://www.udemy.com/course/react-the-complete-guide-incl-redux/", "udemy", 3);

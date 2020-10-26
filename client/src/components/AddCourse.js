@@ -10,6 +10,7 @@ export default class AddCourse extends Component {
       platform: "",
       category: "",
       categories: [],
+      showAlert: false,
     };
   }
 
@@ -69,61 +70,69 @@ export default class AddCourse extends Component {
     const category_id = categories.find((e) => e.name === category).id;
 
     await api.addCourse(title, url, platform, category_id);
+
+    this.setState({ showAlert: true });
   };
 
   render() {
-    const { categories } = this.state;
+    const { categories, showAlert } = this.state;
     return (
       <div className="w-50 mt-5 mx-auto" id="add-course">
-        <h3>Add a new course</h3>
-        <form className="my-3">
-          <input
-            className="form-control mb-2"
-            name="url"
-            value={this.state.url}
-            onChange={this.handleInput}
-            placeholder="Course url"
-          />
-          <input
-            className="form-control"
-            name="title"
-            value={this.state.title}
-            onChange={this.handleInput}
-            placeholder="Course title"
-          />
-          <div className="form-row mt-2">
-            <div className="col-7">
-              <input
-                className="form-control"
-                name="platform"
-                value={this.state.platform}
-                onChange={this.handleInput}
-                placeholder="Platform"
-              />
-            </div>
-            <div className="col">
-              <select
-                className="form-control"
-                id="category"
-                name="category"
-                value={this.state.category}
-                onChange={this.handleInput}
-              >
-                <option>Choose category</option>
-                {categories.map((category, i) => (
-                  <option key={i}>{category.name}</option>
-                ))}
-              </select>
-            </div>
+        {showAlert && (
+          <div className="alert alert-success" role="alert">
+            Course saved!
           </div>
+        )}
+        {!showAlert && (
+          <form className="my-3">
+            <input
+              className="form-control mb-2"
+              name="url"
+              value={this.state.url}
+              onChange={this.handleInput}
+              placeholder="Course url"
+            />
+            <input
+              className="form-control"
+              name="title"
+              value={this.state.title}
+              onChange={this.handleInput}
+              placeholder="Course title"
+            />
+            <div className="form-row mt-2">
+              <div className="col-7">
+                <input
+                  className="form-control"
+                  name="platform"
+                  value={this.state.platform}
+                  onChange={this.handleInput}
+                  placeholder="Platform"
+                />
+              </div>
+              <div className="col">
+                <select
+                  className="form-control"
+                  id="category"
+                  name="category"
+                  value={this.state.category}
+                  onChange={this.handleInput}
+                >
+                  <option>Choose category</option>
+                  {categories.map((category, i) => (
+                    <option key={i}>{category.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-          <button
-            className="btn btn-outline-dark mt-2 px-3"
-            onClick={this.addCourse}
-          >
-            Add
-          </button>
-        </form>
+            <button
+              className="btn btn-outline-dark mt-2 px-3"
+              onClick={this.addCourse}
+            >
+              Add
+            </button>
+          </form>
+        )}
       </div>
     );
   }

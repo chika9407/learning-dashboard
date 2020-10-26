@@ -121,71 +121,68 @@ export default class CoursePage extends Component {
     return (
       <div className="mt-5 text-center" id="course-page">
         <div className="mb-3 p-3">
-          <h5 className="text-capitalize">{course.platform}</h5>
-          <h2 className="mb-4">{course.title}</h2>
+          <h5 className="text-capitalize text-secondary">{course.platform}</h5>
 
-          <div className="d-flex mb-3 justify-content-center">
-            <div
-              className="btn-group btn-group-toggle mr-3"
-              data-toggle="buttons"
-            >
-              <label
-                className={
-                  selectedStatus === "on hold"
-                    ? "btn btn-success"
-                    : "btn btn-secondary"
-                }
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="on hold"
-                  checked={selectedStatus === "on hold"}
-                  onClick={this.handleOptionChange}
-                />
-                on hold
-              </label>
-              <label
-                className={
-                  selectedStatus === "in progress"
-                    ? "btn btn-success"
-                    : "btn btn-secondary"
-                }
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="in progress"
-                  checked={selectedStatus === "in progress"}
-                  onClick={this.handleOptionChange}
-                />
-                in progress
-              </label>
-              <label
-                className={
-                  selectedStatus === "completed"
-                    ? "btn btn-success"
-                    : "btn btn-secondary"
-                }
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="completed"
-                  checked={selectedStatus === "completed"}
-                  onClick={this.handleOptionChange}
-                />
-                completed
-              </label>
-            </div>
-          </div>
-
-          <a href={course.url} target="_blank" className="btn btn-primary">
-            Go to course <i className="fas fa-external-link-alt"></i>
+          <a href={course.url} target="_blank" className="d-block text-dark">
+            <h2>{course.title}</h2>
           </a>
+
+          <div
+            className="btn-group btn-group-toggle mt-3 mr-3"
+            data-toggle="buttons"
+          >
+            <label
+              className={
+                selectedStatus === "on hold"
+                  ? "btn btn-success"
+                  : "btn btn-outline-secondary"
+              }
+            >
+              <input
+                type="radio"
+                name="status"
+                value="on hold"
+                checked={selectedStatus === "on hold"}
+                onClick={this.handleOptionChange}
+              />
+              On Hold
+            </label>
+            <label
+              className={
+                selectedStatus === "in progress"
+                  ? "btn btn-success"
+                  : "btn btn-outline-secondary"
+              }
+            >
+              <input
+                type="radio"
+                name="status"
+                value="in progress"
+                checked={selectedStatus === "in progress"}
+                onClick={this.handleOptionChange}
+              />
+              In Progress
+            </label>
+            <label
+              className={
+                selectedStatus === "completed"
+                  ? "btn btn-success"
+                  : "btn btn-outline-secondary"
+              }
+            >
+              <input
+                type="radio"
+                name="status"
+                value="completed"
+                checked={selectedStatus === "completed"}
+                onClick={this.handleOptionChange}
+              />
+              Completed
+            </label>
+          </div>
         </div>
         <hr className="w-50" />
-        <h5 className="mt-4">To Do List</h5>
+        <h4 className="mt-4">To Do List</h4>
         <ul className="list-group w-25 mt-2 mb-4 mx-auto">
           {tasks.map((task, i) => (
             <li
@@ -209,7 +206,7 @@ export default class CoursePage extends Component {
               </span>
 
               <button
-                className="btn ml-4"
+                className="btn ml-4 text-secondary"
                 onClick={() => this.deleteTask(task.id)}
               >
                 <i className="fas fa-times"></i>
@@ -233,7 +230,7 @@ export default class CoursePage extends Component {
         </form>
         <hr className="w-50" />
         <a
-          className="btn btn-danger mr-3"
+          className="btn btn-outline-danger mr-3"
           onClick={() => this.deleteCourse(course.id)}
         >
           Delete course {/* <i className="fas fa-trash-alt"></i> */}
