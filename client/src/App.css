@@ -3,6 +3,10 @@
   box-shadow: none;
 }
 
+a {
+  color: black;
+}
+
 #navbar {
   position: relative;
   left: 300px;
