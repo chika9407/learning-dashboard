@@ -119,12 +119,12 @@ export default class CoursePage extends Component {
     const { tasks, course, selectedStatus } = this.state;
 
     return (
-      <div className="mt-5 text-left ml-5">
-        <div className="border-bottom mb-3 p-3">
+      <div className="mt-5 text-center" id="course-page">
+        <div className="mb-3 p-3">
           <h5 className="text-capitalize">{course.platform}</h5>
           <h2 className="mb-4">{course.title}</h2>
 
-          <div className="d-flex mb-3">
+          <div className="d-flex mb-3 justify-content-center">
             <div
               className="btn-group btn-group-toggle mr-3"
               data-toggle="buttons"
@@ -179,18 +179,14 @@ export default class CoursePage extends Component {
               </label>
             </div>
           </div>
-          <a
-            className="btn btn-danger mr-3"
-            onClick={() => this.deleteCourse(course.id)}
-          >
-            Delete course {/* <i className="fas fa-trash-alt"></i> */}
-          </a>
+
           <a href={course.url} target="_blank" className="btn btn-primary">
             Go to course <i className="fas fa-external-link-alt"></i>
           </a>
         </div>
+        <hr className="w-50" />
         <h5 className="mt-4">To Do List</h5>
-        <ul className="list-group w-25 mt-2 mb-4">
+        <ul className="list-group w-25 mt-2 mb-4 mx-auto">
           {tasks.map((task, i) => (
             <li
               className="list-group-item d-flex justify-content-between align-items-center p-1"
@@ -221,7 +217,7 @@ export default class CoursePage extends Component {
             </li>
           ))}
         </ul>
-        <form className="form-inline ">
+        <form className="form-inline justify-content-center mb-5">
           <input
             value={this.state.text}
             placeholder="New task..."
@@ -235,6 +231,13 @@ export default class CoursePage extends Component {
             Add
           </button>
         </form>
+        <hr className="w-50" />
+        <a
+          className="btn btn-danger mr-3"
+          onClick={() => this.deleteCourse(course.id)}
+        >
+          Delete course {/* <i className="fas fa-trash-alt"></i> */}
+        </a>
       </div>
     );
   }

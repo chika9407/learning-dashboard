@@ -15,3 +15,18 @@
 .dropdown-toggle::after {
   display: none;
 }
+
+#course-page {
+  position: relative;
+  right: 100px;
+}
+
+#add-course {
+  position: relative;
+  right: 100px;
+}
+
+#resource-list {
+  position: relative;
+  right: 100px;
+}

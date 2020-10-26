@@ -88,7 +88,7 @@ export default class SideBar extends Component {
                 {category.name}
               </Link>
               <a
-                className="nav-link dropdown-toggle px-0 text-dark"
+                className="nav-link dropdown-toggle px-0 text-secondary"
                 href="#"
                 id="navbarDropdown"
                 data-toggle="dropdown"

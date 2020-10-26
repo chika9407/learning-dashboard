@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import SideBar from "./components/SideBar";
 import CategoryPage from "./components/CategoryPage";
+import DiscoverPage from "./components/DiscoverPage";
 
 class App extends React.Component {
   render() {
@@ -20,6 +21,9 @@ class App extends React.Component {
             </div>
             <div className="col-10 text-center pl-5">
               <Switch>
+                <Route exact path="/discover">
+                  <DiscoverPage />
+                </Route>
                 <Route path="/addcourse">
                   <AddCourse />
                 </Route>
