@@ -77,7 +77,7 @@ export default class AddCourse extends Component {
   render() {
     const { categories, showAlert } = this.state;
     return (
-      <div className="w-50 mt-5 mx-auto" id="add-course">
+      <div className="w-50 mx-auto" id="add-course">
         {showAlert && (
           <div className="alert alert-success" role="alert">
             Course saved!

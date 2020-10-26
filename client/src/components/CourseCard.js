@@ -103,7 +103,7 @@ export default class CourseCard extends Component {
             id="start-course"
             className="card-link d-block text-primary"
           >
-            Start course<i className="fas fa-external-link-alt mx-2 mb-2"></i>
+            Go to course<i className="fas fa-external-link-alt mx-2 mb-2"></i>
           </a>
 
           <div className="progress" style={{ height: "15px" }}>

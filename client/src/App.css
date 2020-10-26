@@ -4,12 +4,16 @@
 }
 
 a {
-  color: black;
+  color: #494f53;
 }
 
 #navbar {
   position: relative;
   left: 300px;
+}
+
+#sidebar {
+  z-index: 1;
 }
 
 .dropdown-menu {

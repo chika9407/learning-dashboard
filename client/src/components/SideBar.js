@@ -5,7 +5,12 @@ import api from "../services/api.js";
 export default class SideBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { categories: [], selected: "", newCategory: "" };
+    this.state = {
+      categories: [],
+      selected: "",
+      newCategory: "",
+      showDots: false,
+    };
   }
 
   async componentDidMount() {
@@ -48,6 +53,16 @@ export default class SideBar extends Component {
     }
   };
 
+  // Drop down methods
+
+  handleHover = (e) => {
+    this.setState({ showDots: true });
+  };
+
+  handleStopHover = (e) => {
+    this.setState({ showDots: false });
+  };
+
   deleteCategory = async (category_id) => {
     try {
       await api.deleteCategory(category_id);
@@ -63,9 +78,9 @@ export default class SideBar extends Component {
   };
 
   render() {
-    const { categories, selected, newCategory } = this.state;
+    const { categories, selected, newCategory, showDots } = this.state;
     return (
-      <div className="">
+      <div id="sidebar">
         <nav className="nav flex-column mt-5">
           <Link
             className="navbar-text ml-3 text-secondary font-weight-bold"
@@ -75,7 +90,12 @@ export default class SideBar extends Component {
             Categories
           </Link>
           {categories.map((category, i) => (
-            <div key={i} className="d-flex justify-content-between">
+            <div
+              key={i}
+              className="d-flex justify-content-between"
+              onMouseEnter={this.handleHover}
+              onMouseLeave={this.handleStopHover}
+            >
               <Link
                 className={
                   selected === category.id
@@ -87,16 +107,26 @@ export default class SideBar extends Component {
               >
                 {category.name}
               </Link>
+
               <a
-                className="nav-link dropdown-toggle px-0 text-secondary"
+                className={
+                  showDots
+                    ? "nav-link dropdown-toggle px-0 text-secondary"
+                    : "nav-link dropdown-toggle px-0 text-secondary invisible"
+                }
                 href="#"
                 id="navbarDropdown"
                 data-toggle="dropdown"
               >
                 <i className="fas fa-ellipsis-h p-0 m-0"></i>
               </a>
+
               <div className="dropdown-menu">
-                <a className="dropdown-item" href="#">
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  // onClick={() => this.renameCategory(category.id)}
+                >
                   Rename
                 </a>
                 <a
@@ -115,7 +145,7 @@ export default class SideBar extends Component {
               name="category"
               value={newCategory}
               onChange={this.handleInput}
-              placeholder="Category..."
+              placeholder="New category..."
             />
             <button
               className="btn btn-outline-dark px-2 ml-1"

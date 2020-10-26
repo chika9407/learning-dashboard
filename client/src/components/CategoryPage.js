@@ -57,8 +57,8 @@ export default class CategoryPage extends Component {
     const { categories, courses } = this.state;
 
     return (
-      <div className="pt-3">
-        <div className="d-flex flex-wrap">
+      <div className="pt-5">
+        <div className="d-flex flex-wrap justify-content-center">
           {courses.map((course, i) => (
             <div
               key={i}
@@ -71,7 +71,7 @@ export default class CategoryPage extends Component {
             </div>
           ))}
         </div>
-        {!courses.length && <p className="mt-5 text-left">No courses</p>}
+        {!courses.length && <p className="mt-5 ">No courses</p>}
       </div>
     );
   }

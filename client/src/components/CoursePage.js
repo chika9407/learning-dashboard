@@ -7,8 +7,10 @@ export default class CoursePage extends Component {
     this.state = {
       course: {},
       tasks: [],
+      categories: [],
       text: "",
       selectedStatus: "",
+      selectedCategory: "",
     };
   }
 
@@ -19,7 +21,17 @@ export default class CoursePage extends Component {
     try {
       const course = await api.getCourse(course_id);
       const tasks = await api.getTasks(course_id);
-      this.setState({ course, tasks, selectedStatus: course.status });
+      const categories = await api.getCategories();
+      const selectedCategory = categories.find(
+        (category) => category.id === course.category_id
+      ).id;
+      this.setState({
+        course,
+        tasks,
+        categories,
+        selectedStatus: course.status,
+        selectedCategory,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -115,17 +127,29 @@ export default class CoursePage extends Component {
     await api.updateCourseProgress(course_id, progress);
   }
 
+  handleSelect = (e) => {
+    this.setState({ selectedCategory: e.target.value });
+  };
+
   render() {
-    const { tasks, course, selectedStatus } = this.state;
+    const {
+      tasks,
+      course,
+      categories,
+      selectedStatus,
+      selectedCategory,
+    } = this.state;
 
     return (
       <div className="mt-5 text-center" id="course-page">
         <div className="mb-3 p-3">
           <h5 className="text-capitalize text-secondary">{course.platform}</h5>
 
-          <a href={course.url} target="_blank" className="d-block text-dark">
-            <h2>{course.title}</h2>
-          </a>
+          <h2>
+            <a href={course.url} target="_blank" className="text-dark">
+              {course.title}
+            </a>
+          </h2>
 
           <div
             className="btn-group btn-group-toggle mt-3 mr-3"
@@ -181,6 +205,21 @@ export default class CoursePage extends Component {
             </label>
           </div>
         </div>
+
+        {/* <form className="form-inline justify-content-center">
+          <label>
+            Category:
+            <select
+              className="form-control w-auto ml-4"
+              value={selectedCategory}
+              onChange={this.handleSelect}
+            >
+              {categories.map((category) => (
+                <option value={category.id}>{category.name}</option>
+              ))}
+            </select>
+          </label>
+        </form> */}
         <hr className="w-50" />
         <h4 className="mt-4">To Do List</h4>
         <ul className="list-group w-25 mt-2 mb-4 mx-auto">

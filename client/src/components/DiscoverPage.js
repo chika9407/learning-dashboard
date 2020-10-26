@@ -5,51 +5,61 @@ export default class DiscoverPage extends Component {
     super(props);
     this.state = {
       resources: [
-        {
-          name: "Coursera",
-          url: "https://www.coursera.org/",
-        },
-        { name: "Udemy", url: "https://www.udemy.com/" },
-        { name: "edX", url: "https://www.edx.org/" },
-        {
-          name: "LinkedIn Learning",
-          url: "https://www.linkedin.com/learning/",
-        },
-        {
-          name: "Skillshare",
-          url: "https://www.skillshare.com/",
-        },
+        "https://www.coursera.org/",
+        "https://www.udemy.com/",
+        "https://www.edx.org/",
+        "https://www.linkedin.com/learning/",
       ],
+      url: "",
     };
   }
 
-  render() {
-    const { resources } = this.state;
+  handleInput = (e) => {
+    this.setState({ url: e.target.value });
+  };
 
-    const compare = (a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-        return -1;
-      }
-      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-        return 1;
-      }
-      return 0;
-    };
+  addResource = (e) => {
+    e.preventDefault();
+    const resources = [...this.state.resources];
+    resources.push(this.state.url);
+
+    this.setState({
+      resources,
+      url: "",
+    });
+  };
+
+  render() {
+    const { resources, url } = this.state;
 
     return (
       <div className="pt-5" id="resource-list">
         <h2>Resources</h2>
         <ul className="list-group w-50 mx-auto px-5 mt-3">
-          {resources.sort(compare).map((resource) => (
+          {resources.map((resource, i) => (
             <a
-              href={resource.url}
+              href={resource}
               target="_blank"
               className="list-group-item list-group-item-action"
+              key={i}
             >
-              {resource.name}
+              {resource}
             </a>
           ))}
         </ul>
+        <form className="form-row justify-content-center mt-4">
+          <input
+            className="form-control w-25 mr-2"
+            name="url"
+            value={url}
+            onChange={this.handleInput}
+            placeholder="URL"
+          />
+
+          <button className="btn btn-outline-dark" onClick={this.addResource}>
+            Save
+          </button>
+        </form>
       </div>
     );
   }
