@@ -61,12 +61,7 @@ export default class HomePage extends Component {
         </div>
         <div className="d-flex flex-wrap justify-content-center">
           {courses.map((course, i) => (
-            <div
-              key={i}
-              // className={
-              //   course.status === "in progress" ? "order-1" : "order-2"
-              // }
-            >
+            <div key={i}>
               <CourseCard
                 category={categories?.find((e) => e.id === course.category_id)}
                 course={course}

@@ -10,7 +10,6 @@ export default class CoursePage extends Component {
       categories: [],
       text: "",
       selectedStatus: "",
-      selectedCategory: "",
     };
   }
 
@@ -22,15 +21,12 @@ export default class CoursePage extends Component {
       const course = await api.getCourse(course_id);
       const tasks = await api.getTasks(course_id);
       const categories = await api.getCategories();
-      const selectedCategory = categories.find(
-        (category) => category.id === course.category_id
-      ).id;
+
       this.setState({
         course,
         tasks,
         categories,
         selectedStatus: course.status,
-        selectedCategory,
       });
     } catch (error) {
       console.log(error);
@@ -127,18 +123,8 @@ export default class CoursePage extends Component {
     await api.updateCourseProgress(course_id, progress);
   }
 
-  handleSelect = (e) => {
-    this.setState({ selectedCategory: e.target.value });
-  };
-
   render() {
-    const {
-      tasks,
-      course,
-      categories,
-      selectedStatus,
-      selectedCategory,
-    } = this.state;
+    const { tasks, course, selectedStatus } = this.state;
 
     return (
       <div className="mt-5 text-center" id="course-page">
@@ -158,7 +144,7 @@ export default class CoursePage extends Component {
             <label
               className={
                 selectedStatus === "on hold"
-                  ? "btn btn-success"
+                  ? "btn btn-primary"
                   : "btn btn-outline-secondary"
               }
             >
@@ -174,7 +160,7 @@ export default class CoursePage extends Component {
             <label
               className={
                 selectedStatus === "in progress"
-                  ? "btn btn-success"
+                  ? "btn btn-primary"
                   : "btn btn-outline-secondary"
               }
             >
@@ -190,7 +176,7 @@ export default class CoursePage extends Component {
             <label
               className={
                 selectedStatus === "completed"
-                  ? "btn btn-success"
+                  ? "btn btn-primary"
                   : "btn btn-outline-secondary"
               }
             >
@@ -206,20 +192,6 @@ export default class CoursePage extends Component {
           </div>
         </div>
 
-        {/* <form className="form-inline justify-content-center">
-          <label>
-            Category:
-            <select
-              className="form-control w-auto ml-4"
-              value={selectedCategory}
-              onChange={this.handleSelect}
-            >
-              {categories.map((category) => (
-                <option value={category.id}>{category.name}</option>
-              ))}
-            </select>
-          </label>
-        </form> */}
         <hr className="w-50" />
         <h4 className="mt-4">To Do List</h4>
         <ul className="list-group w-25 mt-2 mb-4 mx-auto">
@@ -272,7 +244,7 @@ export default class CoursePage extends Component {
           className="btn btn-outline-danger mr-3"
           onClick={() => this.deleteCourse(course.id)}
         >
-          Delete course {/* <i className="fas fa-trash-alt"></i> */}
+          Delete course
         </a>
       </div>
     );

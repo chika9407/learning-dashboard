@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import AddCourse from "./components/AddCourse";
 import CoursePage from "./components/CoursePage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -24,13 +23,8 @@ class App extends React.Component {
                 <Route exact path="/discover">
                   <DiscoverPage />
                 </Route>
-                <Route path="/addcourse">
-                  <AddCourse />
-                </Route>
                 <Route path="/courses/:course_id" component={CoursePage} />
-
                 <Route path="/:category_id" component={CategoryPage} />
-
                 <Route exact path="/">
                   <HomePage />
                 </Route>

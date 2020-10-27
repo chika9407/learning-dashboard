@@ -60,10 +60,7 @@ export default class CategoryPage extends Component {
       <div className="pt-5">
         <div className="d-flex flex-wrap justify-content-center">
           {courses.map((course, i) => (
-            <div
-              key={i}
-              // className={course.status === "active" ? "order-1" : "order-2"}
-            >
+            <div key={i}>
               <CourseCard
                 category={categories?.find((e) => e.id === course.category_id)}
                 course={course}
