@@ -7,6 +7,8 @@ import HomePage from "./components/HomePage";
 import SideBar from "./components/SideBar";
 import CategoryPage from "./components/CategoryPage";
 import DiscoverPage from "./components/DiscoverPage";
+import Search from "./components/Search";
+import Login from "./components/Login";
 
 class App extends React.Component {
   render() {
@@ -22,6 +24,13 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/discover">
                   <DiscoverPage />
+                </Route>
+                <Route exact path="/login">
+                  <Login />
+                </Route>
+                <Route path="/search/:q?">
+                  {" "}
+                  <Search />{" "}
                 </Route>
                 <Route path="/courses/:course_id" component={CoursePage} />
                 <Route path="/:category_id" component={CategoryPage} />

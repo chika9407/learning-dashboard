@@ -36,6 +36,14 @@ export default {
 
   /* Courses */
 
+  //GET all courses
+
+  async getAllCourses() {
+    const res = await fetch(`/courses/`);
+    if (res.ok) return await res.json();
+    else throw new Error("Something went wrong");
+  },
+
   // GET courses
   async getCourses(category_id = "") {
     const res = await fetch(`/courses?category_id=${category_id}`);
