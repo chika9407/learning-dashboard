@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import api from "../services/api.js";
 
 export default class CoursePage extends Component {
@@ -18,6 +19,12 @@ export default class CoursePage extends Component {
     const { course_id } = this.props.match.params;
 
     try {
+      const results = await axios("/users/profile", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      });
+      console.log(results);
       const course = await api.getCourse(course_id);
       const tasks = await api.getTasks(course_id);
       const categories = await api.getCategories();

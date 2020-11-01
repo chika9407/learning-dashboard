@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
+import AuthButton from "./AuthButton";
+
 export default class NavBar extends Component {
   render() {
     return (
@@ -31,6 +33,9 @@ export default class NavBar extends Component {
               <NavLink className="nav-link" to="/login" exact>
                 Login
               </NavLink>
+            </li>
+            <li>
+              <AuthButton />
             </li>
           </ul>
         </div>

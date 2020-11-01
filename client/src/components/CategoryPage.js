@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CourseCard from "./CourseCard";
 import api from "../services/api.js";
+import axios from "axios";
 
 export default class CategoryPage extends Component {
   constructor(props) {
@@ -16,6 +17,12 @@ export default class CategoryPage extends Component {
     const { category_id } = this.props.match.params;
 
     try {
+      const results = await axios("/users/profile", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      });
+      console.log(results);
       // fetch all categories and courses
       const categories = await api.getCategories();
       const courses = await api.getCourses(category_id);

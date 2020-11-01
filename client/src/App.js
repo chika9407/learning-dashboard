@@ -8,7 +8,8 @@ import SideBar from "./components/SideBar";
 import CategoryPage from "./components/CategoryPage";
 import DiscoverPage from "./components/DiscoverPage";
 import Search from "./components/Search";
-import Login from "./components/Login";
+import LoginPage from "./components/LoginPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 class App extends React.Component {
   render() {
@@ -26,17 +27,25 @@ class App extends React.Component {
                   <DiscoverPage />
                 </Route>
                 <Route exact path="/login">
-                  <Login />
+                  <LoginPage />
                 </Route>
                 <Route path="/search/:q?">
                   {" "}
                   <Search />{" "}
                 </Route>
-                <Route path="/courses/:course_id" component={CoursePage} />
-                <Route path="/:category_id" component={CategoryPage} />
-                <Route exact path="/">
+                <PrivateRoute
+                  exact
+                  path="/courses/:course_id"
+                  component={CoursePage}
+                />
+                <PrivateRoute
+                  exact
+                  path="/:category_id"
+                  component={CategoryPage}
+                />
+                <PrivateRoute exact path="/">
                   <HomePage />
-                </Route>
+                </PrivateRoute>
               </Switch>
             </div>
           </div>

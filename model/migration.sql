@@ -29,7 +29,15 @@ CREATE TABLE `tasks` (
 	PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `users` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(255) NOT NULL,
+	`password` VARCHAR(255) NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
 ALTER TABLE `courses` ADD CONSTRAINT `courses_fk0` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE CASCADE;
 
 ALTER TABLE `tasks` ADD CONSTRAINT `tasks_fk0` FOREIGN KEY (`course_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE;
 
+ALTER TABLE `users` ADD CONSTRAINT `users_fk0` FOREIGN KEY (`user_id`) REFERENCES `courses`(`id`) ON DELETE CASCADE;

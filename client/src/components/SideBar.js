@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api.js";
+import axios from "axios";
 
 export default class SideBar extends Component {
   constructor(props) {
@@ -15,6 +16,12 @@ export default class SideBar extends Component {
 
   async componentDidMount() {
     try {
+      const results = await axios("/users/profile", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      });
+      console.log(results);
       // fetch categories
       const categories = await api.getCategories();
       this.setState({ categories });

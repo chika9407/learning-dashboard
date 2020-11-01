@@ -30,3 +30,6 @@ INSERT INTO tasks (text, complete, course_id) VALUES ("Week 1", 1, 4);
 INSERT INTO tasks (text, complete, course_id) VALUES ("Week 2", 0, 4);
 INSERT INTO tasks (text, complete, course_id) VALUES ("Week 3", 0, 4);
 INSERT INTO tasks (text, complete, course_id) VALUES ("Week 4", 0, 4);
+
+
+INSERT INTO users (username, password) VALUES ("test", "test");
